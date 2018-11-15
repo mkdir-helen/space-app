@@ -16,7 +16,7 @@ function updateWeatherEvents() {
     .then(cloudForecast => {
         // check forecast for clear skies and make events
         const clearSkies = cloudForecast.filter(day => day.cloudCover < 0.2)
-                                  .map(day => Event.add('clear sky', new Date(day.time)))
+                                  .map(day => Event.add('clear sky', new Date(day.time * 1000)))
         Promise.all(clearSkies)
         .then(console.log)
     })

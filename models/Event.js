@@ -8,8 +8,8 @@ class Event {
 
     // create
     static add(name, date) {
-        db.result('insert into events (name, date) values ($1, $2)', [name, date])
-        .then(event => new Event(event.name, event.date))
+        return db.result('insert into events (name, date) values ($1, $2)', [name, date])
+        .then(() => new Event(name, date))
     }
     // retrieve
 
