@@ -5,9 +5,17 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
-const db = require('./models/db');
+const User = require('./models/User');
+const Body = require('./models/Body');
+const Event = require('./models/Event');
+const apiCalls = require('./apiCalls')
 
+function updateWeatherEvents() {
+    const cloudForecast = apiCalls.fetchWeather([37.8267, -122.4233])
+    Event.add()
+}
 
+apiCalls.fetchSpaceBody('moon')
 
 //Connect to stylesheets
 // app.use(express.static('public'));

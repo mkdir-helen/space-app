@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "debug": "node --inspect-brk index.js"
+    "debug": "node --inspect-brk index.js",
+    "reset-db": "dropdb space-app-db; createdb space-app-db; psql -f schema.sql space-app-db; psql -f seed.sql space-app-db;"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/SCollinA/space-app#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "connect-pg-simple": "^5.0.0",
