@@ -12,7 +12,11 @@ const apiCalls = require('./apiCalls')
 
 function updateWeatherEvents() {
     const cloudForecast = apiCalls.fetchWeather([37.8267, -122.4233])
-    Event.add()
+    cloudForecast.forEach(day => {
+        if (day.cloudCover < 0.2) {
+            Event.add('clear sky', day.time)
+        }
+    }); 
 }
 
 apiCalls.fetchSpaceBody('moon')
