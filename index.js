@@ -11,15 +11,19 @@ const Event = require('./models/Event');
 const apiCalls = require('./apiCalls')
 
 function updateWeatherEvents() {
-    const cloudForecast = apiCalls.fetchWeather([37.8267, -122.4233])
-    cloudForecast.forEach(day => {
-        if (day.cloudCover < 0.2) {
-            Event.add('clear sky', day.time)
-        }
-    }); 
+    // get weather forecast
+    apiCalls.fetchClouds([37.8267, -122.4233])
+    .then(cloudForecast => {
+        // check forecast for clear skies and make events
+        const clearSkies = cloudForecast.filter(day => day.cloudCover < 0.2)
+                                  .map(day => Event.add('clear sky', new Date(day.time)))
+        Promise.all(clearSkies)
+        .then(console.log)
+    })
 }
 
-apiCalls.fetchSpaceBody('moon')
+updateWeatherEvents()
+// apiCalls.fetchSpaceBody('moon')
 
 //Connect to stylesheets
 // app.use(express.static('public'));

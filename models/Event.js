@@ -1,4 +1,4 @@
-const db = require('./models/db');
+const db = require('./db');
 
 class Event {
     constructor(name, date) {
