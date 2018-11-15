@@ -12,7 +12,7 @@ function fetchClouds(location) {
             visibility: day.visibility
           }
         })
-      })
+    })
 }
 
 function fetchSpaceBody(bodyName) {

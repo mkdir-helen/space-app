@@ -8,7 +8,7 @@ class Event {
 
     // create
     static add(name, date) {
-        db.one('insert into events (name, date) values ($1, $2)', [name, date])
+        db.result('insert into events (name, date) values ($1, $2)', [name, date])
         .then(event => new Event(event.name, event.date))
     }
     // retrieve
