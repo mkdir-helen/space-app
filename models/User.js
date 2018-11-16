@@ -1,19 +1,22 @@
 const db = require('./db');
 
 class User {
-    constructor(id, name, google_ID, thumbnail) {
+    constructor(id, name, google_ID, thumbnail, location, username, pwhash) {
         // define properties that
         // are also the names
         // of the database columns
         this.id = id;
         this.name = name;
-        // this.location = location;
+        this.location = location;
         this.google_ID = google_ID;
-        // this.username = username;
+        this.username = username;
         this.thumbnail = thumbnail;
+        this.pwhash = pwhash;
     }
 
     // CREATE
+    
+
     static oAdd(name, google_ID, thumbnail) {
         return db.one(`
             insert into users 
@@ -29,7 +32,7 @@ class User {
     }
 
         // RETRIEVE
-        static getUsers(gid) {
+        static getUsersGI(gid) {
             return db.one(`
                 select * from users where google_ID=$1
             `,[gid]).then(userObj => {

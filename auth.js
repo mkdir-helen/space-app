@@ -25,7 +25,7 @@ passport.serializeUser((user,done)=> {
 })
 
 passport.deserializeUser((id, done)=>{
-    User.getUsers(id).then((user)=> {
+    User.getUsersGI(id).then((user)=> {
         done(null, user);
     })
 })  
@@ -36,7 +36,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.getUsers(profile.id).then((currentUser) => {
+    User.getUsersGI(profile.id).then((currentUser) => {
         if(currentUser){
             //already have the user
             done(null, currentUser);
@@ -79,6 +79,7 @@ app.get('/login', passport.authenticate('google', {
 
 app.get('/logout', (req,res)=> {
     req.logout();
+    // req.session.destroy();
     res.redirect('/');
 })
 
