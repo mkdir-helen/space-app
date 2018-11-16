@@ -1,25 +1,50 @@
 const db = require('./db');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 class User {
-    constructor(name, location, username, pwhash) {
+
+    constructor(id, name, google_ID, thumbnail, location, username, pwhash) {
+        // define properties that
+        // are also the names
+        // of the database columns
         this.id = id;
         this.name = name;
         this.location = location;
-        this.username = username;        
+        this.google_ID = google_ID;
+        this.username = username;
+        this.thumbnail = thumbnail;
         this.pwhash = pwhash;
     }
- // CREATE
- static add(name, location, username, password) {
+
+    // CREATE
+    
+
+    static oAdd(name, google_ID, thumbnail) {
+        return db.one(`
+            insert into users 
+                (name, google_ID, thumbnail)
+            values
+                ($1, $2, $3)
+            returning id    
+            `, [name, google_ID, thumbnail])
+            .then(data => {
+                const u = new User(data.id, name, google_ID, thumbnail);
+                return u;
+            });
+    }
+ 
+ static add(username, password) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     return db.one(`
         insert into users 
-            (name, location, username, pwhash)
+            (username, pwhash)
         values
-            ($1, $2, $3, $4)
-        returning id`, [name, location, username, hash])
+            ($1, $2)
+        returning id`, [username, hash])
         .then(data => {
-            const u = new User(data.id, name, location, username);
+            const u = new User(data.id, username);
             return u;
         });
 
@@ -65,13 +90,36 @@ static searchByName(name) {
     `, [name])
 }
 
-static serachByLocation(location) {
+static searchByLocation(location) {
     return db.any(`
         select * from users
             where location ilike '%1:raw%'`
             ,[location])
 }
 
+
+        
+static getUsersGI(gid) {
+    return db.one(`
+        select * from users where google_ID=$1
+    `,[gid]).then(userObj => {
+        // transform array of objects
+        // into array of User instances
+        console.log(userObj);
+        console.log('userObj in getUsers');
+            const u = new User(userObj.id, userObj.name, userObj.google_ID, userObj.thumbnail);
+            return u;
+    }).catch(
+        () => {
+            return false;
+        }
+    )
+}
+
+passwordDoesMatch(thePassword){
+    const didMatch = bcrypt.compareSync(thePassword, this.pwhash);
+    return didMatch;
+}
 
 
  // UPDATE
@@ -87,6 +135,7 @@ static serachByLocation(location) {
 
     })
 }   
+
 
 updateLocation(location) {
     this.location = location;
@@ -113,6 +162,7 @@ static deleteById(id) {
     where id = $1
     `, [id]);
     }
+
 
 }
 

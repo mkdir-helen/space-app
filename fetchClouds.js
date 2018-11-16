@@ -9,12 +9,11 @@ function fetchClouds(location) {
 }
 
 function parseResponse(response) {
-  const dailyWeatherArray = response.data.daily.data
-  return dailyWeatherArray
+  return response.data
 }
 
-function parseForecast(dailyWeatherArray) {
-  // handle success
+function parseForecast(weatherData) {
+  const dailyWeatherArray = weatherData.daily.data
   const cloudForecast = dailyWeatherArray.map(day => {
       return { 
         // convert UNIX time to JD
@@ -57,22 +56,4 @@ function addClearSky(day) {
   }
 }
 
-function fetchSpaceBody(bodyName) {
-  axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${bodyName}`)
-      .then(function (response) {
-        // handle success
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
-}
-
-module.exports = {
-    fetchClouds,
-    fetchSpaceBody
-}
+module.exports = fetchClouds
