@@ -1,6 +1,6 @@
 function body(content) {
     return `
-        <div class="wapper">
+        <div class="wrapper">
                 ${mainNav()}
                 ${topContainer()}
                 ${content}

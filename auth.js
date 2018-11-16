@@ -63,7 +63,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req,res) =>{
-    res.send('home');
+    res.redirect('/login');
 })
 
 app.get('/login', passport.authenticate('google', {
@@ -71,7 +71,7 @@ app.get('/login', passport.authenticate('google', {
     ['https://www.googleapis.com/auth/userinfo.profile', ],
     accessType: 'offline',
     prompt: 'consent',
-    successRedirect: '/profile',
+    successRedirect: '/user',
     failureRedirect: '/login'
     }));
 

@@ -11,16 +11,6 @@ values
     ('Fabio', 33.83, -84.34, 'Fabio', 'afadfadasd'),
     ('Flavio', 33.83, -84.34, 'Flavio', 'dasdsfsdfaS');
 
-insert into events 
-    (name, date)
-values
-    ('solar eclipse', '2018-11-20'),
-    ('comet shower', '2019-03-15'),
-    ('Jupiter visible', '2018-12-31'),
-    ('Mars visible', '2019-05-05'),
-    ('full moon', '2019-10-09');
-
-
 insert into body_types
     (name)
 values
@@ -45,7 +35,17 @@ values
     ('Venus'),
     ('Mercury'),
     ('Andromeda'),
-    ('Big Dipper');
+    ('Big Dipper'),
+    ('Perseids');
+
+insert into events 
+    (name, date, body_id, user_id)
+values
+    ('solar eclipse', '2018-11-20', 5, 1),
+    ('meteor shower', '2019-03-15', 11, 2),
+    ('Jupiter visible', '2018-12-31', 3, 3),
+    ('Mars visible', '2019-05-05', 4, 4),
+    ('full moon', '2019-10-09', 5, 5);
 
 insert into friends 
     (user_id_a, friend_id)
