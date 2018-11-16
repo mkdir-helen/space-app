@@ -14,7 +14,7 @@ padding: 0;
 
 
 body {
-    background: url(https://apod.nasa.gov/apod/image/1810/OrionRedBlue_Lindemann_960.jpg);
+    background-image: url('../img/OrionRedBlue_Lindemann_960.jpg');
     background-color: #212121;
     background-blend-mode: overlay;
     background-position: center;

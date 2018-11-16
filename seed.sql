@@ -26,6 +26,7 @@ values
 insert into bodies
     (name)
 values
+    ('Weather'),
     ('Sun'),
     ('Hale-Bopp'),
     ('Jupiter'),

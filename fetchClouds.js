@@ -25,7 +25,8 @@ function parseForecast(weatherData) {
         // convert UNIX time to JD
       time: new Date(day.time * 1000),
       cloudCover: day.cloudCover,
-      visibility: day.visibility
+      visibility: day.visibility,
+      moonPhase: day.moonPhase
       }
   })
  
@@ -37,15 +38,21 @@ function updateForecast(cloudForecast, user) {
   cloudForecast.forEach(day => {
     // get any events on the days of the forecast
     Event.getByDate(day.time)
-    .then(eventArray => findClearSkies(eventArray, user.id))
-    .then(deleteClearSkies)
+    .then(eventArray => {
+      debugger
+      return Promise.all([deleteClearSkies(findClearSkies(eventArray, user.id)),
+                          deleteMoonSlivers(findMoonSlivers(eventArray, user.id))])
+    })
     .then(() => {
       addClearSky(day, user.id)
+      addMoonSliver(day, user.id)
     })
-  })
-}
-
-function findClearSkies(eventArray, user_id) {
+    // .then(() => {
+      // })
+    })
+  }
+  
+  function findClearSkies(eventArray, user_id) {
   // delete any clear sky events in database on these days
   return eventArray.filter(event => event.name == 'clear sky' && event.user_id == user_id)
 }
@@ -59,6 +66,24 @@ function addClearSky(day, user_id) {
   // and add any event days that are forecasted clear
   if (day.cloudCover < 0.2) {
     Event.add('clear sky', day.time, 1, user_id)
+  }
+}
+
+function findMoonSlivers(eventArray, user_id) {
+  // delete any clear sky events in database on these days
+  deleteMoonSlivers(eventArray.filter(event => event.name == 'Low moonlight' && event.user_id == user_id))
+  return eventArray
+}
+
+// return promise that all clear skies will be deleted
+function deleteMoonSlivers(moonSliverEventArray) {
+  return Promise.all(moonSliverEventArray.map(moonSliverEvent => moonSliverEvent.delete()))
+}
+
+function addMoonSliver(day, user_id) {
+  // and add any event days that are forecasted clear
+  if (day.moonPhase < 0.2) {
+    Event.add('Low moonlight', day.time, 7, user_id)
   }
 }
 

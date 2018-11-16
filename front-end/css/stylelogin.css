@@ -7,7 +7,7 @@ html {
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background: url(https://apod.nasa.gov/apod/image/1204/EndeavourFlightDeck_cooper_960.jpg) no-repeat center center fixed; 
+    background-image: url('../img/EndeavourFlightDeck_cooper_960.jpg');
     background-size: contain;
     overflow: hidden;
     margin: 250px 40px;

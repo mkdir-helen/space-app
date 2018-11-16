@@ -125,7 +125,7 @@ app.post('/login', (req, res) => {
 
 
 //Connect to stylesheets
-app.use(express.static('public'));
+app.use(express.static('front-end'));
 
 //Configure body-parser to read data sent by HTML form tags
 app.use(bodyParser.urlencoded({ extended: false }));

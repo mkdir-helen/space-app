@@ -13,12 +13,14 @@ function fetchSpace() {
 }
 
 function fetchSpaceBody(body) {
-    axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
-    .then(parseResponse)
-    .then(parseObjectData)
-    // body.addLocationPoint returns an object with ra and dec
-    .then(parsedObjectData => body.addLocationPoint(body.id, parsedObjectData.ra.decimal, parsedObjectData.dec.decimal))
-    // .then(checkVisibility)
+    if (body.name != 'Weather') {
+        axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
+        .then(parseResponse)
+        .then(parseObjectData)
+        // body.addLocationPoint returns an object with ra and dec
+        .then(parsedObjectData => body.addLocationPoint(body.id, parsedObjectData.ra.decimal, parsedObjectData.dec.decimal))
+        // .then(checkVisibility)
+    }
 }
 
 function parseResponse(response) {
