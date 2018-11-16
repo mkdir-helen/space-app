@@ -78,7 +78,7 @@ app.get('/login', passport.authenticate('google', {
     
 
 app.get('/logout', (req,res)=> {
-    res.logout();
+    req.logout();
     res.redirect('/');
 })
 
