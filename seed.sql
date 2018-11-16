@@ -1,13 +1,13 @@
 
 
 insert into users
-    (name, location, username, pwhash)
+    (name, location, username)
 values
-    ('Jeff', 'Seattle, WA', 'Jeff', 'asdasd232'),
-    ('Mike','Denver, Co', 'Mike', 'adfadfad'),
-    ('Jerry', 'Cleveland, OH', 'Jerry', 'asfasdasd'),
-    ('Fabio', 'Rio de Janiero, Brazl', 'Fabio', 'afadfadasd'),
-    ('Flavio', 'Milan, Italy', 'Flavio', 'dasdsfsdfaS');
+    ('Jeff', 'Seattle, WA', 'Jeff'),
+    ('Mike','Denver, Co', 'Mike'),
+    ('Jerry', 'Cleveland, OH', 'Jerry'),
+    ('Fabio', 'Rio de Janiero, Brazl', 'Fabio'),
+    ('Flavio', 'Milan, Italy', 'Flavio');
 
 insert into events 
     (name, date)

@@ -4,8 +4,10 @@ create table users (
   id serial primary key,
   name text,
   location text,
-  username varchar(200) not null,
-  pwhash varchar(60) not null
+  google_ID text,
+  thumbnail text,
+  username varchar(200),
+  pwhash varchar(60)
 );
 
 
