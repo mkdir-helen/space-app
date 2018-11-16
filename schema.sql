@@ -39,7 +39,10 @@ create table events (
   body_id integer references bodies (id)
 );
 
-
+create table users_events (
+    user_id integer references users (id),
+    event_id integer references events (id)
+);
 
 create table friends (
     user_id_a integer references users (id),

@@ -3,11 +3,13 @@
 insert into users
     (name, lat, long, username, pwhash)
 values
-    ('Jeff', 34, 80, 'Jeff', 'asdasd232'),
-    ('Mike', 40, 90, 'Mike', 'adfadfad'),
-    ('Jerry', 40, 90, 'Jerry', 'asfasdasd'),
-    ('Fabio', 40, 90, 'Fabio', 'afadfadasd'),
-    ('Flavio', 40, 90, 'Flavio', 'dasdsfsdfaS');
+-- seed with buckhead, ga coordinates
+-- 33.83942°N 84.37992°W
+    ('Jeff', 33.83, -84.34, 'Jeff', 'asdasd232'),
+    ('Mike', 33.83, -84.34, 'Mike', 'adfadfad'),
+    ('Jerry', 33.83, -84.34, 'Jerry', 'asfasdasd'),
+    ('Fabio', 33.83, -84.34, 'Fabio', 'afadfadasd'),
+    ('Flavio', 33.83, -84.34, 'Flavio', 'dasdsfsdfaS');
 
 insert into events 
     (name, date)
