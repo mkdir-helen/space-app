@@ -17,18 +17,7 @@ const eventElement = require('./views/event')
 const dayElement = require('./views/day')
 const monthElement = require('./views/month')
 const monthNameArray = [
-    'January', 
-    '       February', 
-    '               March', 
-'                       April', 
-    '                       May', 
-'                               June', 
-    '                               July', 
-    '                                   August', 
-'                                           September', 
-    '                                               October', 
-    '                                                       November', 
-    '                                                               December'
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
 ]
 const yearElement = require('./views/year')
 const contentElement = require('./views/content')
