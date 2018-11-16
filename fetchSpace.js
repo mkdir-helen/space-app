@@ -18,7 +18,7 @@ function fetchSpaceBody(body) {
     .then(parseObjectData)
     // body.addLocationPoint returns an object with ra and dec
     .then(parsedObjectData => body.addLocationPoint(body.id, parsedObjectData.ra.decimal, parsedObjectData.dec.decimal))
-    .then(checkVisibility)
+    // .then(checkVisibility)
 }
 
 function parseResponse(response) {
@@ -46,7 +46,6 @@ function checkVisibility(objectPosition) {
             axios.get(`https://maps.googleapis.com/maps/api/timezone/json?location=${user.lat},${user.long}&timestamp=${currentTime.getDate()}&key=AIzaSyCKK9cCfam4qhtNI2RwHTcf5220rV7HlIY`)
             .then(parseResponse)
             .then(response => {
-                debugger
                 const timeZoneOffset = response.rawOffset / 60 / 60
                 currentTime.setHours(currentTime.getHours() + timeZoneOffset)
                 const currentTimeOffset = currentTime.getHours() * 15
