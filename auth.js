@@ -64,13 +64,16 @@ passport.use(new GoogleStrategy({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/', (req,res) =>{
+    res.redirect('/login');
+})
 
 app.get('/google/login', passport.authenticate('google', {
     scope:
     ['https://www.googleapis.com/auth/userinfo.profile', ],
     accessType: 'offline',
     prompt: 'consent',
-    successRedirect: '/profile',
+    successRedirect: '/user',
     failureRedirect: '/login'
     }));
 

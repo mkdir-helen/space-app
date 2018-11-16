@@ -6,7 +6,7 @@ create table users (
   lat float,
   long float,
   username varchar(200) not null,
-  pwhash varchar(60) not null
+  pwhash varchar(60) not null,
   google_ID text,
   thumbnail text
 );
@@ -37,13 +37,14 @@ create table events (
   id serial primary key,
   name text,
   date date,
-  body_id integer references bodies (id)
+  body_id integer references bodies (id),
+  user_id integer references users (id)
 );
 
-create table users_events (
-    user_id integer references users (id),
-    event_id integer references events (id)
-);
+-- create table users_events (
+--     user_id integer references users (id),
+--     event_id integer references events (id)
+-- );
 
 create table friends (
     user_id_a integer references users (id),
