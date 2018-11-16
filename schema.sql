@@ -7,6 +7,8 @@ create table users (
   long float,
   username varchar(200) not null,
   pwhash varchar(60) not null
+  google_ID text,
+  thumbnail text
 );
 
 create table body_types (
@@ -17,8 +19,7 @@ create table body_types (
 create table bodies (
     id serial primary key,
     name text,
-    body_type integer references body_types (id),
-    visible boolean
+    body_type integer references body_types (id)
 );
 
 create table body_locations (

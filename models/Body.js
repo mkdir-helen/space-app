@@ -4,12 +4,11 @@ class Body {
     constructor(id, name) {
         this.id = id
         this.name = name
-        this.visible = this.visible
     }
 
     static getAll() {
         return db.any('select * from bodies')
-        .then(bodies => bodies.map(body => new Body(body.id, body.name, body.visible)))
+        .then(bodies => bodies.map(body => new Body(body.id, body.name)))
     }
 
     addLocationPoint(body_id, ra, dec) {
@@ -17,11 +16,6 @@ class Body {
         .then(result => {
             return { body: this, ra: result.ra, dec: result.dec, date: result.date }
         })
-    }
-
-    setVisible(visible) {
-        return db.result('update bodies set visible=$1 where id=$2', [visible, this.id])
-        .then(console.log)
     }
 }
 

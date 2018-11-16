@@ -7,7 +7,7 @@ class Event {
         this.date = date
     }
 
-    // create
+    // Create
     static add(name, date) {
         return db.one('insert into events (name, date) values ($1, $2) returning id', [name, date])
         .then(result => new Event(result.id, name, date))
