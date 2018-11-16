@@ -42,3 +42,36 @@ p {
     line-height: 22px;
 }
 
+.Team-Section{
+    overflow: hidden;
+    text-align: center;
+    padding: 60px;
+}
+
+.Team-Section h2 {
+    text-transform: uppercase;
+    margin-bottom: 60;
+    color: white;
+    font-size: 40px;
+}
+
+.Team-images{
+    margin-bottom: 40px;
+}
+.Team-images img{
+    display: inline-block;
+    margin: 0 30px;
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.border{
+    display: block;
+    margin: auto;
+    background: red;
+    width: 160px;
+    height: 3px;
+    margin-bottom: 60px;
+}
