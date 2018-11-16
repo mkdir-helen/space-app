@@ -3,17 +3,31 @@
 create table users (
   id serial primary key,
   name text,
-  location text,
+  lat float,
+  long float,
   username varchar(200) not null,
   pwhash varchar(60) not null
 );
 
-
-create table bodies (
+create table body_types (
     id serial primary key,
     name text
 );
 
+create table bodies (
+    id serial primary key,
+    name text,
+    body_type integer references body_types (id),
+    visible boolean
+);
+
+create table body_locations (
+    id serial primary key, 
+    ra float,
+    dec float,
+    date date,
+    body_id integer references bodies (id)
+);
 
 -- EVENTS
 -- name

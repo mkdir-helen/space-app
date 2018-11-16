@@ -1,13 +1,13 @@
 
 
 insert into users
-    (name, location, username, pwhash)
+    (name, lat, long, username, pwhash)
 values
-    ('Jeff', 'Seattle, WA', 'Jeff', 'asdasd232'),
-    ('Mike','Denver, Co', 'Mike', 'adfadfad'),
-    ('Jerry', 'Cleveland, OH', 'Jerry', 'asfasdasd'),
-    ('Fabio', 'Rio de Janiero, Brazl', 'Fabio', 'afadfadasd'),
-    ('Flavio', 'Milan, Italy', 'Flavio', 'dasdsfsdfaS');
+    ('Jeff', 34, 80, 'Jeff', 'asdasd232'),
+    ('Mike', 40, 90, 'Mike', 'adfadfad'),
+    ('Jerry', 40, 90, 'Jerry', 'asfasdasd'),
+    ('Fabio', 40, 90, 'Fabio', 'afadfadasd'),
+    ('Flavio', 40, 90, 'Flavio', 'dasdsfsdfaS');
 
 insert into events 
     (name, date)
@@ -19,15 +19,31 @@ values
     ('full moon', '2019-10-09');
 
 
+insert into body_types
+    (name)
+values
+    ('star'),
+    ('comet'),
+    ('asteroid'),
+    ('satellite'),
+    ('artificial satellite'),
+    ('constellation'),
+    ('meteor shower'),
+    ('galaxy');
+
 insert into bodies
     (name)
 values
-    ('sun'),
-    ('comets'),
+    ('Sun'),
+    ('Hale-Bopp'),
     ('Jupiter'),
     ('Mars'),
-    ('constellation'),
-    ('moon');
+    ('Orion'),
+    ('Moon'),
+    ('Venus'),
+    ('Mercury'),
+    ('Andromeda'),
+    ('Big Dipper');
 
 insert into friends 
     (user_id_a, friend_id)
