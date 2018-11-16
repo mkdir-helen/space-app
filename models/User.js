@@ -4,13 +4,14 @@ const saltRounds = 10;
 
 class User {
 
-    constructor(id, name, google_ID, thumbnail, location, username, pwhash) {
+    constructor(id, name, google_ID, thumbnail, lat, lon, username, pwhash) {
         // define properties that
         // are also the names
         // of the database columns
         this.id = id;
         this.name = name;
-        this.location = location;
+        this.lat = lat;
+        this.lon = lon;
         this.google_ID = google_ID;
         this.username = username;
         this.thumbnail = thumbnail;
@@ -57,7 +58,7 @@ static getAll() {
         // transform array of objects
         // into array of User instances
         const instanceArray = userArray.map(userObj => {
-            const u = new User(userObj.id, userObj.name);
+            const u = new User(userObj.id, userObj.name, null, null, userObj.lat, userObj.lon, userObj.username, userObj.pwhash);
             return u;
         });
         return instanceArray;
@@ -137,13 +138,14 @@ passwordDoesMatch(thePassword){
 }   
 
 
-updateLocation(location) {
-    this.location = location;
+updateLocation(lat, lon) {
+    this.lat = lat
+    this.lon = lon
     return db.result(`
         update users 
-            set location=$2
+            set lat=$2, lon=$3
         where id=$1`,
-        [this.id, location])
+        [this.id, lat, lon])
         .then(result => {
             return result.rowCount === 1;
         })

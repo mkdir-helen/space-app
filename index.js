@@ -30,7 +30,7 @@ function updateEvents() {
     // User.getLocation()
     // .then(fetchClouds)
     // get weather forecast
-    // fetchClouds([37.8267, -122.4233])
+    fetchClouds([37.8267, -122.4233])
     fetchSpace()
 }
 
@@ -139,7 +139,7 @@ app.get('/:username([A-Z]+)', (req, res) => {
         Event.getByUser(user.id)
         .then(events => {
             debugger
-            events.sort((event_a, event_b) => event_a.date.getDate() > event_b.date.getDate())
+            events.sort((event_a, event_b) => event_a.date.getDate() < event_b.date.getDate())
             const eventElements = []
             const dayElements = []
             const monthElements = []
