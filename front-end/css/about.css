@@ -1,0 +1,77 @@
+html {
+    box-sizing: border-box;
+}
+  *, *:before, *:after {
+    box-sizing: inherit;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Exo+2:700');
+* {
+margin: 0 auto;
+padding: 0;
+}
+
+
+
+body {
+    background: url(https://apod.nasa.gov/apod/image/1810/OrionRedBlue_Lindemann_960.jpg);
+    background-color: #212121;
+    background-blend-mode: overlay;
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+}
+
+h1 {
+    color: whitesmoke;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 46px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+p {
+
+    max-width: 700px;
+    min-height: 200px;
+    padding: 0;
+    color: whitesmoke;
+    font-family: OpenSans;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+}
+
+.Team-Section{
+    overflow: hidden;
+    text-align: center;
+    padding: 60px;
+}
+
+.Team-Section h2 {
+    text-transform: uppercase;
+    margin-bottom: 60;
+    color: white;
+    font-size: 40px;
+}
+
+.Team-images{
+    margin-bottom: 40px;
+}
+.Team-images img{
+    display: inline-block;
+    margin: 0 30px;
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.border{
+    display: block;
+    margin: auto;
+    background: red;
+    width: 160px;
+    height: 3px;
+    margin-bottom: 60px;
+}
