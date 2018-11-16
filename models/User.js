@@ -33,7 +33,7 @@ class User {
                 return u;
             });
     }
- // CREATE
+ 
  static add(username, password) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);

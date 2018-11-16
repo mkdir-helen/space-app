@@ -49,8 +49,7 @@ updateWeatherEvents()
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
-    console.log(req.session.user);
-    console.log(req.isAuthenticated());
+    
     if (req.session.user || req.isAuthenticated()) {
       // req.user is available for use here
       console.log('we are all good');
@@ -60,7 +59,18 @@ const ensureAuthenticated = (req, res, next) => {
     console.log('clearly, they are not authenticated');
     // denied. redirect to login
     res.redirect('/login');
-  }
+}
+
+app.get('/', (req, res) => {
+    res.send('Home');
+    // const thePage = page('hey there');
+    // res.send(thePage);
+})
+
+app.get('/about', (req,res)=>{
+    res.send('about');
+})
+
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     // console.log('This is the /new route');
@@ -73,11 +83,6 @@ app.get('/favorites', ensureAuthenticated, (req, res) => {
 });
 
 
-app.get('/', (req, res) => {
-    res.send('Home');
-    // const thePage = page('hey there');
-    // res.send(thePage);
-})
 
 app.get('/register', (req, res) => {
     //Send them the signup form
@@ -109,7 +114,7 @@ app.post('/login', (req, res) => {
     const loginUsername = req.body.username;
     const loginPassword = req.body.password;
    //2. Find a user whose name matches 'theUsername'
-   User.searchByUserName(loginUsername)
+   User.getByUsername(loginUsername)
         .catch(err => {
             console.log(err);
             res.redirect('/login');

@@ -19,8 +19,8 @@ app.use(session({
 }));
 
 passport.serializeUser((user,done)=> {
-    console.log(user);
-    console.log('this is serializeUser');
+    // console.log(user);
+    // console.log('this is serializeUser');
     done(null, user.id); 
 })
 
@@ -48,8 +48,8 @@ passport.use(new GoogleStrategy({
                 profile.id,
                 profile._json.image.url
             ).then((newUser) => {
-                console.log(newUser);
-                console.log('this is the newUser');
+                // console.log(newUser);
+                // console.log('this is the newUser');
                 done(null, {
                     id: newUser.google_ID
                 });
