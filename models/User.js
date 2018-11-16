@@ -1,4 +1,6 @@
 const db = require('./db');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 class User {
 
@@ -31,18 +33,18 @@ class User {
                 return u;
             });
     }
- // CREATE
- static add(name, location, username, password) {
+ 
+ static add(username, password) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     return db.one(`
         insert into users 
-            (name, location, username, pwhash)
+            (username, pwhash)
         values
-            ($1, $2, $3, $4)
-        returning id`, [name, location, username, hash])
+            ($1, $2)
+        returning id`, [username, hash])
         .then(data => {
-            const u = new User(data.id, name, location, username);
+            const u = new User(data.id, username);
             return u;
         });
 
@@ -88,7 +90,7 @@ static searchByName(name) {
     `, [name])
 }
 
-static serachByLocation(location) {
+static searchByLocation(location) {
     return db.any(`
         select * from users
             where location ilike '%1:raw%'`
@@ -97,23 +99,27 @@ static serachByLocation(location) {
 
 
         
-        static getUsersGI(gid) {
-            return db.one(`
-                select * from users where google_ID=$1
-            `,[gid]).then(userObj => {
-                // transform array of objects
-                // into array of User instances
-                console.log(userObj);
-                console.log('userObj in getUsers');
-                    const u = new User(userObj.id, userObj.name, userObj.google_ID, userObj.thumbnail);
-                    return u;
-            }).catch(
-                () => {
-                    return false;
-                }
-            )
+static getUsersGI(gid) {
+    return db.one(`
+        select * from users where google_ID=$1
+    `,[gid]).then(userObj => {
+        // transform array of objects
+        // into array of User instances
+        console.log(userObj);
+        console.log('userObj in getUsers');
+            const u = new User(userObj.id, userObj.name, userObj.google_ID, userObj.thumbnail);
+            return u;
+    }).catch(
+        () => {
+            return false;
         }
+    )
+}
 
+passwordDoesMatch(thePassword){
+    const didMatch = bcrypt.compareSync(thePassword, this.pwhash);
+    return didMatch;
+}
 
 
  // UPDATE

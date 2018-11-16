@@ -19,8 +19,8 @@ app.use(session({
 }));
 
 passport.serializeUser((user,done)=> {
-    console.log(user.google_id);
-    console.log('this is serializeUser');
+    // console.log(user);
+    // console.log('this is serializeUser');
     done(null, user.id); 
 })
 
@@ -48,9 +48,11 @@ passport.use(new GoogleStrategy({
                 profile.id,
                 profile._json.image.url
             ).then((newUser) => {
-                console.log(newUser);
-                console.log('this is the newUser');
-                done(null, newUser);
+                // console.log(newUser);
+                // console.log('this is the newUser');
+                done(null, {
+                    id: newUser.google_ID
+                });
             });
         }
     })
@@ -66,7 +68,7 @@ app.get('/', (req,res) =>{
     res.redirect('/login');
 })
 
-app.get('/login', passport.authenticate('google', {
+app.get('/google/login', passport.authenticate('google', {
     scope:
     ['https://www.googleapis.com/auth/userinfo.profile', ],
     accessType: 'offline',
@@ -94,9 +96,9 @@ app.get('/auth/google',
     res.redirect('/profile');
   });
 
-app.get('/profile', (req, res)=>{
-    res.send('profile');
-});  
+// app.get('/profile', (req, res)=>{
+//     res.send('profile');
+// });  
 
 
 module.exports = app;
