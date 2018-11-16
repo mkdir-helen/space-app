@@ -1,14 +1,15 @@
 const db = require('./db');
 
 class Body {
-    constructor(id, name) {
+    constructor(id, name, body_type) {
         this.id = id
         this.name = name
+        this.body_type = body_type
     }
 
     static getAll() {
         return db.any('select * from bodies')
-        .then(bodies => bodies.map(body => new Body(body.id, body.name)))
+        .then(bodies => bodies.map(body => new Body(body.id, body.name, body.body_type)))
     }
 
     addLocationPoint(body_id, ra, dec) {
