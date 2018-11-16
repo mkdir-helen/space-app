@@ -49,10 +49,10 @@ function updateForecast(cloudForecast, user) {
     })
     // .then(() => {
       // })
-    })
-  }
+  })
+}
   
-  function findClearSkies(eventArray, user_id) {
+function findClearSkies(eventArray, user_id) {
   // delete any clear sky events in database on these days
   return eventArray.filter(event => event.name == 'clear sky' && event.user_id == user_id)
 }
