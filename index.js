@@ -8,18 +8,20 @@ const pgSession = require('connect-pg-simple')(session);
 const User = require('./models/User');
 const Body = require('./models/Body');
 const Event = require('./models/Event');
+const schedule = require('node-schedule')
 const apiCalls = require('./apiCalls')
+const fetchClouds = apiCalls.fetchClouds
 
+// create job scheduled to run at midnight every day
+const j = schedule.scheduleJob('* 0 0 * * *', updateWeatherEvents)
+
+// will use user location
+// currently using coordinates for los angeles
 function updateWeatherEvents() {
+    // User.getLocation()
+    // .then(fetchClouds)
     // get weather forecast
-    apiCalls.fetchClouds([37.8267, -122.4233])
-    .then(cloudForecast => {
-        // check forecast for clear skies and make events
-        const clearSkies = cloudForecast.filter(day => day.cloudCover < 0.2)
-                                  .map(day => Event.add('clear sky', new Date(day.time)))
-        Promise.all(clearSkies)
-        .then(console.log)
-    })
+    fetchClouds([37.8267, -122.4233])
 }
 
 updateWeatherEvents()
