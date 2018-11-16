@@ -1,13 +1,15 @@
 
 
 insert into users
-    (name, location, username)
+    (name, lat, long, username, pwhash)
 values
-    ('Jeff', 'Seattle, WA', 'Jeff'),
-    ('Mike','Denver, Co', 'Mike'),
-    ('Jerry', 'Cleveland, OH', 'Jerry'),
-    ('Fabio', 'Rio de Janiero, Brazl', 'Fabio'),
-    ('Flavio', 'Milan, Italy', 'Flavio');
+-- seed with buckhead, ga coordinates
+-- 33.83942°N 84.37992°W
+    ('Jeff', 33.83, -84.34, 'Jeff', 'asdasd232'),
+    ('Mike', 33.83, -84.34, 'Mike', 'adfadfad'),
+    ('Jerry', 33.83, -84.34, 'Jerry', 'asfasdasd'),
+    ('Fabio', 33.83, -84.34, 'Fabio', 'afadfadasd'),
+    ('Flavio', 33.83, -84.34, 'Flavio', 'dasdsfsdfaS');
 
 insert into events 
     (name, date)
@@ -19,15 +21,31 @@ values
     ('full moon', '2019-10-09');
 
 
+insert into body_types
+    (name)
+values
+    ('star'),
+    ('comet'),
+    ('asteroid'),
+    ('satellite'),
+    ('artificial satellite'),
+    ('constellation'),
+    ('meteor shower'),
+    ('galaxy');
+
 insert into bodies
     (name)
 values
-    ('sun'),
-    ('comets'),
+    ('Sun'),
+    ('Hale-Bopp'),
     ('Jupiter'),
     ('Mars'),
-    ('constellation'),
-    ('moon');
+    ('Orion'),
+    ('Moon'),
+    ('Venus'),
+    ('Mercury'),
+    ('Andromeda'),
+    ('Big Dipper');
 
 insert into friends 
     (user_id_a, friend_id)
