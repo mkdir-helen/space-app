@@ -6,16 +6,18 @@ class Event {
         this.date = date
     }
 
-    // create
+    // Create
     static add(name, date) {
-        db.result('insert into events (name, date) values ($1, $2)', [name, date])
-        .then(event => new Event(event.name, event.date))
+        return db.one(`insert into events (name, date) values ($1, $2) returning id`,[name, date])
+        .then(event => new event(event.name, event.date))
+    } 
+    // Retrieve
+    function getAll() {
+        return db.any('select * from events');
     }
-    // retrieve
+    // Update
 
-    // update
-
-    // delete
+    // Delete
 
 }
 

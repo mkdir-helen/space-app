@@ -1,8 +1,8 @@
 const db = require('./db');
 
 class Body {
-    constructor() {
-
+    constructor(name) {
+        this.name = name;
     }
 
     
