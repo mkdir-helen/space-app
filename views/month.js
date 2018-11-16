@@ -1,6 +1,6 @@
-function month(days) {
+function month(monthName, days) {
     return `
-    <h1 class="Week-Title">Week 1</h1>
+    <h1 class="Week-Title">${monthName}</h1>
     <div class="week">
         ${days}
     </div>

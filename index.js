@@ -138,6 +138,7 @@ app.get('/:username([A-Z]+)', (req, res) => {
     .then(user => {
         Event.getByUser(user.id)
         .then(events => {
+            debugger
             events.sort((event_a, event_b) => event_a.date.getDate() > event_b.date.getDate())
             const eventElements = []
             const dayElements = []
@@ -158,14 +159,17 @@ app.get('/:username([A-Z]+)', (req, res) => {
                     eventElements.push(eventElement(currentEvent.name))
                     // if it is for a new month in same year
                 } else if (previousEvent.date.getYear() == currentEvent.date.getYear()) {
-                    monthElements.push(monthElement(dayElements.join('')))
+                    dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+                    monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
                     // lock id dayElements and reset
                     dayElements.length = 0
                     eventElements.length = 0
                     eventElements.push(eventElement(currentEvent.name))
                     // if it is a new year
                 } else {
-                    yearElements.push(yearElement(monthElements.join('')))
+                    dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+                    monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
+                    yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
                     // reset month, day, and events
                     monthElements.length = 0
                     dayElements.length = 0
@@ -174,9 +178,9 @@ app.get('/:username([A-Z]+)', (req, res) => {
                 }
                 previousEvent = currentEvent
             }
-            dayElements.push(dayElement(eventElements.join('')))
-            monthElements.push(monthElement(dayElements.join('')))
-            yearElements.push(yearElement(monthElements.join('')))
+            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+            monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
+            yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
             res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
         })
     })
