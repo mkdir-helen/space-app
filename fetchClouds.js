@@ -39,7 +39,6 @@ function updateForecast(cloudForecast, user) {
     // get any events on the days of the forecast
     Event.getByDate(day.time)
     .then(eventArray => {
-      debugger
       return Promise.all([deleteClearSkies(findClearSkies(eventArray, user.id)),
                           deleteMoonSlivers(findMoonSlivers(eventArray, user.id))])
     })

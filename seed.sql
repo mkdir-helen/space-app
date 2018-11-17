@@ -28,16 +28,21 @@ insert into bodies
 values
     ('Weather'),
     ('Sun'),
-    ('Hale-Bopp'),
-    ('Jupiter'),
-    ('Mars'),
-    ('Orion'),
-    ('Moon'),
-    ('Venus'),
     ('Mercury'),
+    ('Venus'),
+    ('Moon'),
+    ('Mars'),
+    ('Jupiter'),
+    ('Saturn'),
+    ('Uranus'),
+    ('Neptune'),
+    ('Pluto'),
+    ('Hale-Bopp'),
+    ('Orion'),
     ('Andromeda'),
     ('Big Dipper'),
-    ('Perseids');
+    ('Perseids'),
+    ('North Star');
 
 insert into events 
     (name, date, body_id, user_id)

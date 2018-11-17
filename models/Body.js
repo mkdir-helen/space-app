@@ -11,8 +11,8 @@ class Body {
     
     
     
-    addLocationPoint(body_id, ra, dec) {
-        return db.one('insert into body_locations (ra, dec, date, body_id) values ($1, $2, $3, $4) returning ra, dec, date', [ra, dec, new Date(), body_id])
+    addLocationPoint(ra, dec) {
+        return db.one('insert into body_locations (ra, dec, date, body_id) values ($1, $2, $3, $4) returning ra, dec, date', [ra, dec, new Date(), this.id])
         .then(result => {
             return { body: this, ra: result.ra, dec: result.dec, date: result.date }
         })
