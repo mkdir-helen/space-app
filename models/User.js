@@ -4,48 +4,49 @@ const saltRounds = 10;
 
 class User {
 
-    constructor(id, name, google_ID, thumbnail, lat, lon, username, pwhash) {
+    constructor(id, name, lat, long, username, pwhash, google_ID, thumbnail ) {
         // define properties that
         // are also the names
         // of the database columns
         this.id = id;
         this.name = name;
         this.lat = lat;
-        this.lon = lon;
-        this.google_ID = google_ID;
+        this.long = long;
         this.username = username;
-        this.thumbnail = thumbnail;
         this.pwhash = pwhash;
+        this.google_ID = google_ID;
+        this.thumbnail = thumbnail;
     }
 
     // CREATE
     
 
-    static oAdd(name, google_ID, thumbnail) {
+    static oAdd(name, lat, long, username, password, google_ID, thumbnail) {
         return db.one(`
             insert into users 
-                (name, google_ID, thumbnail)
+                (name, lat, long, username, pwhash, google_ID, thumbnail)
             values
-                ($1, $2, $3)
+                ($1, $2, $3, $4, $5, $6, $7)
             returning id    
-            `, [name, google_ID, thumbnail])
+            `, [name, null, null, null, null, google_ID, thumbnail])
             .then(data => {
-                const u = new User(data.id, name, google_ID, thumbnail);
+                const u = new User(data.id, name, data.lat, data.long, data.username, data.google_ID, thumbnail);
                 return u;
             });
     }
  
- static add(username, password) {
+ static add(name, lat, long, username, password, google_ID, thumbnail) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     return db.one(`
         insert into users 
-            (username, pwhash)
+            (name, lat, long, username, pwhash, google_ID, thumbnail)
         values
-            ($1, $2)
-        returning id`, [username, hash])
+            ($1, $2, $3, $4, $5, $6, $7)
+        returning id`, [null, null, null, username, hash, null, null])
         .then(data => {
-            const u = new User(data.id, username);
+            console.log(data);
+            const u = new User(data.id, data.name, data.lat, data.long, username, data.google_ID, data.thumbnail);
             return u;
         });
 
@@ -79,8 +80,8 @@ static getByUsername(username) {
     return db.one(`
         select * from users
         where username ilike '%$1:raw%'          
-    `, [username]).then(result => {
-        return new User(result.id, result.name, null, null, result.lat, result.lon,  result.username,result.pwhash);
+    `, [username]).then(data => { console.log(data);
+        return new User(data.id, data.name, data.lat, data.long, username, data.pwhash, data.google_ID, data.thumbnail);
     })
 }
 
@@ -108,7 +109,7 @@ static getUsersGI(gid) {
         // into array of User instances
         console.log(userObj);
         console.log('userObj in getUsers');
-            const u = new User(userObj.id, userObj.name, userObj.google_ID, userObj.thumbnail);
+            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.google_ID, userObj.thumbnail);
             return u;
     }).catch(
         () => {

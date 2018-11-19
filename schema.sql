@@ -1,12 +1,20 @@
+drop table users cascade;
+drop table body_types cascade;
+drop table body_locations cascade;
+drop table events cascade;
+drop table friends cascade;
+drop table favorites cascade;
+
+
 
 -- USERS
 create table users (
   id serial primary key,
   name text,
   lat float,
-  lon float,
-  username varchar(200) not null,
-  pwhash varchar(60) not null,
+  long float,
+  username varchar(200),
+  pwhash varchar(60),
   google_ID text,
   thumbnail text
 );
