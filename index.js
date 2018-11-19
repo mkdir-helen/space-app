@@ -43,7 +43,7 @@ function updateEvents() {
     // User.getLocation()
     // .then(fetchClouds)
     // get weather forecast
-    // fetchClouds()
+    fetchClouds()
     fetchSpace()
     fetchDoomsday()
 }
