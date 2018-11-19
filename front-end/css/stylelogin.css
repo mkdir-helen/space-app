@@ -1,0 +1,143 @@
+html {
+    box-sizing: border-box;
+}
+  *, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: url('../img/EndeavourFlightDeck_cooper_960.jpg');
+    background-size: contain;
+    overflow: hidden;
+    margin: 250px 40px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: contain;
+    background-color: black;
+    overflow: hidden;
+}
+
+
+.login {
+    width: 400px;
+    margin: 16px auto;
+    font-size: 16px;
+    background: rgb(8, 69, 202);
+    position: center;
+    box-shadow: 1px 1px 50px #000;
+    
+    
+}
+.login-header,
+.login p {
+margin-top: 0;
+margin-bottom: 0;
+}
+
+.login-header {
+    padding: 20px;
+    font-size: 1.4em;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.login-container {
+    background: #ebebeb;
+    padding: 12px;
+}
+
+
+.login p {
+    padding: 12px;
+}
+
+.login input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    padding: 16px;
+    outline: 0;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+background: #fff;
+border-color: #bbb;
+color: #555;
+}
+
+.login input[type="submit"] {
+    background: #47cf73;
+    border-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+  
+.login input[type="submit"]:hover {
+    background: #17c;
+}
+
+  /* Buttons' focus effect */
+.login input[type="submit"]:focus {
+    border-color: #05a;
+}
+h1{
+    font-family: 'Open Sans Condensed', sans-serif;
+    position: relative;
+    margin-top: 0px;
+    text-align: center;
+    font-size: 40px;
+    color: #ddd;
+    text-shadow: 3px 3px 10px #000;
+}
+
+.text--center a { 
+    text-decoration: none;
+    color: #47cf73;
+}
+.btn{
+    margin: 7px;
+    color: red;
+    text-decoration: none;
+}
+.btn a {
+    text-decoration: none;
+    color: red;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background: url(https://apod.nasa.gov/apod/image/1204/EndeavourFlightDeck_cooper_960.jpg) no-repeat center center fixed; 
+        background-position: center;
+        background-size: contain;
+        margin: 150px 40px;
+        line-height: 1.4;
+        -webkit-background-size: contain;
+        -moz-background-size: contain;
+        -o-background-size: contain;
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    .login {
+        width: 300px;
+        margin: 12px auto;
+        font-size: 16px;
+        background: rgb(8, 69, 202);
+        position: center;
+        box-shadow: 1px 1px 50px #000      
+        
+    }
+
+
+}
+

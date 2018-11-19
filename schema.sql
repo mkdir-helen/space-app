@@ -4,7 +4,7 @@ create table users (
   id serial primary key,
   name text,
   lat float,
-  long float,
+  lon float,
   username varchar(200) not null,
   pwhash varchar(60) not null,
   google_ID text,

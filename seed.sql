@@ -1,15 +1,15 @@
 
 
 insert into users
-    (name, lat, long, username, pwhash)
+    (name, lat, lon, username, pwhash)
 values
 -- seed with buckhead, ga coordinates
 -- 33.83942°N 84.37992°W
+    ('Flavio', 33.83, -84.34, 'Flavio', 'dasdsfsdfaS'),
     ('Jeff', 33.83, -84.34, 'Jeff', 'asdasd232'),
     ('Mike', 33.83, -84.34, 'Mike', 'adfadfad'),
     ('Jerry', 33.83, -84.34, 'Jerry', 'asfasdasd'),
-    ('Fabio', 33.83, -84.34, 'Fabio', 'afadfadasd'),
-    ('Flavio', 33.83, -84.34, 'Flavio', 'dasdsfsdfaS');
+    ('Fabio', 33.83, -84.34, 'Fabio', 'afadfadasd');
 
 insert into body_types
     (name)
@@ -26,17 +26,23 @@ values
 insert into bodies
     (name)
 values
+    ('Weather'),
     ('Sun'),
-    ('Hale-Bopp'),
-    ('Jupiter'),
-    ('Mars'),
-    ('Orion'),
-    ('Moon'),
-    ('Venus'),
     ('Mercury'),
+    ('Venus'),
+    ('Moon'),
+    ('Mars'),
+    ('Jupiter'),
+    ('Saturn'),
+    ('Uranus'),
+    ('Neptune'),
+    ('Pluto'),
+    ('Hale-Bopp'),
+    ('Orion'),
     ('Andromeda'),
     ('Big Dipper'),
-    ('Perseids');
+    ('Perseids'),
+    ('North Star');
 
 insert into events 
     (name, date, body_id, user_id)
