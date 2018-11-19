@@ -35,7 +35,7 @@ const bodyElement = require('./views/body')
 const pageElement = require('./views/page')
 
 // create job scheduled to run at midnight every day
-// const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) :)
+const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) 
 
 // will use user location
 // currently using coordinates for los angeles
@@ -48,7 +48,7 @@ function updateEvents() {
     fetchDoomsday()
 }
 
-// updateEvents() :)
+updateEvents() 
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
