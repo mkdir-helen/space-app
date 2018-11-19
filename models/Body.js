@@ -26,7 +26,7 @@ class Body {
         })
     }
     
-    
+// Retrieve
     static getAll() {
         return db.any('select * from bodies')
         .then(bodies => bodies.map(body => new Body(body.id, body.name, body.body_type)))
@@ -38,6 +38,16 @@ static getByName(name) {
     return db.any('select * from bodies where name=$1', [name])
     .then(bodyArray => bodyArray.map(body => new Body(body.id, body.name, body.body_type)))
 }
+
+
+getFavUsers() {
+    return db.any(`
+        select * from favorites
+            where body_id = $1
+    `, [this.id]);
+}
+
+
 
 // update
 
