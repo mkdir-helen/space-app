@@ -117,7 +117,7 @@ app.post('/register', (req, res) => {
     User.add('', null, null, newUsername, newPassword, '', '')
         .then(newUser => {
             req.session.user = newUser;
-            res.redirect('/profile');
+            res.redirect(`/profile/${newUsername}`);
         })
 
 })

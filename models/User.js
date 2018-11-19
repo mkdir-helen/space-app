@@ -46,7 +46,7 @@ class User {
         returning id`, [null, null, null, username, hash, null, null])
         .then(data => {
             console.log(data);
-            const u = new User(data.id, data.name, data.lat, data.long, username, hash, data.google_ID, data.thumbnail);
+            const u = new User(data.id, data.name, data.lat, data.long, username, data.google_ID, data.thumbnail);
             return u;
         });
 
@@ -59,7 +59,7 @@ static getAll() {
         // transform array of objects
         // into array of User instances
         const instanceArray = userArray.map(userObj => {
-            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.pwhash, null, null);
+            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, null, null);
             return u;
         });
         return instanceArray;
