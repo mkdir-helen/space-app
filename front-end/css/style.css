@@ -21,7 +21,7 @@ html,body {
 
 body {
 
-    background: url(https://apod.nasa.gov/apod/image/1811/CaveNebula_Ayoub_2469.jpg);
+    background: url('../img/CaveNebula_Ayoub_2469.jpg');
     padding: 5%;
     line-height: 1.4;
     background-position: center;
@@ -30,9 +30,16 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    /* overflow: hidden;  */
+    overflow: hidden; 
 
 }
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .btn{
     background: var(dark);
     color: var(--light);
@@ -104,6 +111,7 @@ body {
 
 /* Boxes */
 .Boxes {
+    flex: 1;
     overflow-y: scroll;
     /* overflow: hidden; */
 }
