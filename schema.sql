@@ -1,12 +1,3 @@
-drop table users cascade;
-drop table body_types cascade;
-drop table body_locations cascade;
-drop table events cascade;
-drop table friends cascade;
-drop table favorites cascade;
-
-
-
 -- USERS
 create table users (
   id serial primary key,
