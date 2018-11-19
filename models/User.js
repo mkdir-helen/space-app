@@ -116,6 +116,15 @@ static getUsersGI(gid) {
     )
 }
 
+getFavBody() {
+    return db.any(`
+        select * from favorites
+            where user_id = $1
+    `, [this.id]);
+}
+
+
+
 passwordDoesMatch(thePassword){
     const didMatch = bcrypt.compareSync(thePassword, this.pwhash);
     return didMatch;

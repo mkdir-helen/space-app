@@ -103,6 +103,15 @@ h1{
     text-decoration: none;
     color: #47cf73;
 }
+.btn{
+    margin: 7px;
+    color: red;
+    text-decoration: none;
+}
+.btn a {
+    text-decoration: none;
+    color: red;
+}
 
 @media screen and (max-width: 768px) {
     body {
