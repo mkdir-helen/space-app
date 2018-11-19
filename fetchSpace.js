@@ -7,14 +7,14 @@ const api_key = require('./secret')
 
 function fetchSpace() {
     // get space bodies out of database and fetch all of their names
-    Body.getAll()
+    return Body.getAll()
     // for each body, fetch that data
-    .then(bodies => bodies.forEach(fetchSpaceBody))
+    .then(bodies => Promise.all(bodies.map(fetchSpaceBody))
 }
 
 function fetchSpaceBody(body) {
     if (body.name != 'Weather') {
-        axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
+        return axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
         .then(parseResponse)
         .then(parseObjectData)
         // body.addLocationPoint returns an object with ra and dec
