@@ -9,7 +9,7 @@ function fetchSpace() {
     // get space bodies out of database and fetch all of their names
     return Body.getAll()
     // for each body, fetch that data
-    .then(bodies => Promise.all(bodies.map(fetchSpaceBody))
+    .then(bodies => Promise.all(bodies.map(fetchSpaceBody)))
 }
 
 function fetchSpaceBody(body) {
@@ -38,13 +38,15 @@ function checkVisibility(objectPosition) {
     // find events added previously
     // event must be on this date
     return Event.getByDate(objectPosition.date)
-    .then(event => {
+    .then(events => {
         // event must be for this body
-        if (event.body_id == objectPosition.body.id) {
-            // delete events
-            return event.delete()
-            // where we had checked the visibility before
-        }
+        events.forEach(event => {
+            if (event.body_id == objectPosition.body.id) {
+                // delete events
+                return event.delete()
+                // where we had checked the visibility before
+            }
+        })
     })
     .then(() => {
         const body = objectPosition.body
