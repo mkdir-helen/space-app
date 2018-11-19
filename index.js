@@ -9,6 +9,15 @@ const User = require('./models/User');
 const Body = require('./models/Body');
 const Event = require('./models/Event');
 const app = require('./auth');
+
+
+const mainPage = require('./views/mainpage');
+const loginForm = require('./views/loginform');
+const registerForm = require('./views/registerform');
+const profilePage = require('./views/profile');
+const eventPage = require('./views/eventpage');
+const aboutPage = require('./views/about');
+
 const schedule = require('node-schedule')
 const fetchClouds = require('./fetchClouds')
 const fetchSpace = require('./fetchSpace')
@@ -26,7 +35,7 @@ const bodyElement = require('./views/body')
 const pageElement = require('./views/page')
 
 // create job scheduled to run at midnight every day
-const j = schedule.scheduleJob('* 0 0 * * *', updateEvents)
+const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) 
 
 // will use user location
 // currently using coordinates for los angeles
@@ -34,12 +43,12 @@ function updateEvents() {
     // User.getLocation()
     // .then(fetchClouds)
     // get weather forecast
-    fetchClouds([37.8267, -122.4233])
+    fetchClouds()
     fetchSpace()
     fetchDoomsday()
 }
 
-updateEvents()
+updateEvents() 
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
@@ -55,20 +64,33 @@ const ensureAuthenticated = (req, res, next) => {
     res.redirect('/login');
 }
 
+
+//Connect to stylesheets
+app.use(express.static('public'));
+
+//Configure body-parser to read data sent by HTML form tags
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Configure body-parser to read JSON bodies
+app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
-    res.send('Home');
+    res.send(mainPage());
     // const thePage = page('hey there');
     // res.send(thePage);
-})
+});
 
-app.get('/about', (req, res) => {
-    res.send('about');
-})
+app.get('/about', (req,res)=>{
+    res.send(aboutPage());
+});
 
+app.get('/events', (req,res)=>{
+    res.send(eventPage());
+});
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     // console.log('This is the /new route');
-    res.send('profile');
+    res.send(profilePage());
 });
 
 app.get('/favorites', ensureAuthenticated, (req, res) => {
@@ -81,8 +103,8 @@ app.get('/favorites', ensureAuthenticated, (req, res) => {
 app.get('/register', (req, res) => {
     //Send them the signup form
     // res.send(page(registrationForm()));
-    res.send('register form');
-})
+    res.send(registerForm());
+});
 
 app.post('/register', (req, res) => {
     //Process the signup form
@@ -90,7 +112,9 @@ app.post('/register', (req, res) => {
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     //2. call user.add
-    User.add(newUsername, newPassword)
+    // console.log(newUsername);
+    // console.log(newPassword);
+    User.add('', null, null, newUsername, newPassword, '', '')
         .then(newUser => {
             req.session.user = newUser;
             res.redirect('/profile');
@@ -101,7 +125,7 @@ app.post('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
     // res.send(page(login()));
-    res.send('login');
+    res.send(loginForm());
 })
 
 app.post('/login', (req, res) => {
@@ -114,30 +138,23 @@ app.post('/login', (req, res) => {
             res.redirect('/login');
         })
         .then(theUser => {
+            console.log(theUser);
             // const didMatch = bcrypt.compareSync(loginPassword, theUser.pwhash);
             if (theUser.passwordDoesMatch(loginPassword)) {
                 req.session.user = theUser;
+                console.log('it worked or it exists');
                 res.redirect('/profile');
             } else {
                 res.redirect('/login');
+                console.log('boohoo');
             }
         })
 });
 
 
 
-//Connect to stylesheets
-app.use(express.static('front-end'));
 
-//Configure body-parser to read data sent by HTML form tags
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-
-// Configure body-parser to read JSON bodies
-app.use(bodyParser.json());
-
-app.get('/:username([A-Z]+)', (req, res) => {
+app.get('/profile/:username([A-Z]+)', (req, res) => {
     // user's main page
     // get all of user's events
     // and build page

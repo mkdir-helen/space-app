@@ -55,4 +55,4 @@ function footer() {
     `
 }
 
-module.exports = body
+module.exports = body;

@@ -46,7 +46,6 @@ class Body {
         return db.one('select * from body_types where id=$1', [this.body_type])
     }
 
-
     getFavUsers() {
         return db.any(`
             select * from favorites

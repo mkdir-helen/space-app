@@ -2,11 +2,11 @@ const axios = require('axios')
 const Event = require('./models/Event')
 const User = require('./models/User')
 
-function fetchClouds(location) {
+function fetchClouds() {
   return User.getAll()
   .then(users => {
     return Promise.all(users.map(user => {
-      return axios.get(`https://api.darksky.net/forecast/4f6c922b9b20ecf763ece25f86c994d0/${user.lat},${user.lon}?exclude=[currently, minutely, hourly]`)
+      return axios.get(`https://api.darksky.net/forecast/${process.env.WEATHER_KEY}/${user.lat},${user.long}?exclude=[currently, minutely, hourly]`)
       .then(parseResponse)
       .then(parseForecast)
       .then(cloudForecast => updateForecast(cloudForecast, user))
