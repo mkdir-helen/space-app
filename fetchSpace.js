@@ -45,7 +45,7 @@ function checkVisibility(objectPosition) {
         .then(sunPosition => {
             console.log(sunPosition.ra, objectPosition.ra)
             debugger
-            if (sunPosition.ra - 90 > objectPosition.ra && sunPosition.ra + 90 < objectPosition.ra) {
+            if (sunPosition.ra - 90 > objectPosition.ra || sunPosition.ra + 90 < objectPosition.ra) {
                 // get all users
                 User.getAll()
                 .then(users => {
