@@ -1,7 +1,7 @@
 
 
 insert into users
-    (name, lat, lon, username, pwhash)
+    (name, lat, long, username, pwhash)
 values
 -- seed with buckhead, ga coordinates
 -- 33.83942°N 84.37992°W
