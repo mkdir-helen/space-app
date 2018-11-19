@@ -3,7 +3,7 @@ const db = require('./models/db')
 const Event = require('./models/Event') // required to make/update events
 const Body = require('./models/Body') // required to reference body names
 const User = require('./models/User') // required to check visibility
-const api_key = require('./secret')
+// const api_key = require('./secret')
 
 function fetchSpace() {
     // get space bodies out of database and fetch all of their names
