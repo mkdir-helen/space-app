@@ -17,7 +17,7 @@ html,body {
 
 body {
 
-    background: url(https://apod.nasa.gov/apod/image/1811/46PCherney_NoText.jpg);
+    background: url(https://apod.nasa.gov/apod/image/1712/freeflyer_nasa_960.jpg);
     padding: 5%;
     line-height: 1.4;
     background-position: center;
@@ -104,7 +104,7 @@ body {
     /* overflow: hidden; */
 }
 
-.Day {
+.Day{
 
     background: #fff;
     text-align: center;
@@ -112,21 +112,6 @@ body {
     margin: 1.6%;
     border-radius: 12px
 }
-
-.week{
-    display: flex;
-}
-
-.Week-Title{
-    color: var(--light);
-
-}
-
-.searchControl{
-    color: rgb(218, 183, 28);
-    font-display: f
-}
-
 
 @media screen and (max-width: 768px) {
 

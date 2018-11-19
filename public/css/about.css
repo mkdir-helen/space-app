@@ -42,3 +42,57 @@ p {
     line-height: 22px;
 }
 
+.Team-images {
+    
+}
+
+@media screen and (max-width: 768px) {
+
+    h1 {
+        color: whitesmoke;
+        font-family: 'Exo 2', sans-serif;
+        font-size: 30px;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    
+    p {
+    
+        max-width: 700px;
+        min-height: 200px;
+        padding: 0;
+        color: whitesmoke;
+        font-family: OpenSans;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 22px;
+    }
+    
+
+    }
+
+
+    @media screen and (max-width: 414px) {
+        h1 {
+            color: whitesmoke;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 46px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        
+        p {
+        
+            max-width: 700px;
+            min-height: 200px;
+            padding: 0;
+            color: whitesmoke;
+            font-family: OpenSans;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 22px;
+        }
+        
+    
+        
+    }
