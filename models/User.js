@@ -59,7 +59,7 @@ static getAll() {
         // transform array of objects
         // into array of User instances
         const instanceArray = userArray.map(userObj => {
-            const u = new User(userObj.id, userObj.name, null, null, userObj.lat, userObj.lon, userObj.username, userObj.pwhash);
+            const u = new User(userObj.id, userObj.name, null, null, userObj.lat, userObj.long, userObj.username, userObj.pwhash);
             return u;
         });
         return instanceArray;
