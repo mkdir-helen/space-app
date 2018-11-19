@@ -140,53 +140,6 @@ app.get('/:username([A-Z]+)', (req, res) => {
     // get all of user's events
     // and build page
     User.getByUsername(req.params.username)
-        .then(user => {
-            Event.getByUser(user.id)
-                .then(events => {
-                    events.sort((event_a, event_b) => event_a.date.getDate() > event_b.date.getDate())
-                    const eventElements = []
-                    const dayElements = []
-                    const monthElements = []
-                    const yearElements = []
-                    let previousEvent
-                    while (events.length > 0) {
-                        const currentEvent = events.pop()
-                        // if it's for the same day or the first event
-                        if (eventElements.length == 0 || previousEvent.date.getDate() == currentEvent.date.getDate()) {
-                            eventElements.push(eventElement(currentEvent.name))
-                            // if it is for a new day in same month
-                        } else if (previousEvent.date.getMonth() == currentEvent.date.getMonth()) {
-                            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
-                            // reset eventElements array
-                            eventElements.length = 0
-                            eventElements.push(eventElement(currentEvent.name))
-                            // if it is for a new month in same year
-                        } else if (previousEvent.date.getYear() == currentEvent.date.getYear()) {
-                            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
-                            monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
-                            // lock id dayElements and reset
-                            dayElements.length = 0
-                            eventElements.length = 0
-                            eventElements.push(eventElement(currentEvent.name))
-                            // if it is a new year
-                        } else {
-                            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
-                            monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
-                            yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
-                            // reset month, day, and events
-                            monthElements.length = 0
-                            dayElements.length = 0
-                            eventElements.length = 0
-                            eventElements.push(eventElement(currentEvent.name))
-                        }
-                        previousEvent = currentEvent
-                    }
-                    dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
-                    monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
-                    yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
-                    res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
-                })
-
     .then(user => {
         Event.getByUser(user.id)
         .then(events => {
@@ -232,8 +185,8 @@ app.get('/:username([A-Z]+)', (req, res) => {
             monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
             yearElements.push(yearElement(previousEvent.date.getFullYear(), monthElements.join('')))
             res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
-
         })
+    })
 })
 
 app.listen(3000, () => {
