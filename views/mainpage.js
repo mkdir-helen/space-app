@@ -19,17 +19,17 @@ function mainpage(){
             <nav class="main-nav">
                 <ul>
                     <li>
-                        <a href="#">My Space <i class="fas fa-globe"></i></a>
+                        <a href="/">My Space <i class="fas fa-globe"></i></a>
     
                     </li>
                     <li>
-                        <a href="#">Login <i class="fas fa-sign-in-alt"></i></a>
+                        <a href="/login">Login <i class="fas fa-sign-in-alt"></i></a>
                     </li>
                     <li>
-                        <a href="#">SignUp <i class="fas fa-user-plus"></i></a>
+                        <a href="/register">SignUp <i class="fas fa-user-plus"></i></a>
                     </li>
                     <li>
-                        <a href="#">About <i class="fas fa-info"></i></a>
+                        <a href="/about">About <i class="fas fa-info"></i></a>
                     </li>
                 </ul>
             </nav>

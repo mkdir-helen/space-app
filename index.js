@@ -23,8 +23,11 @@ const pageElement = require('./views/page');
 
 const mainPage = require('./views/mainpage');
 const loginForm = require('./views/loginform');
+const registerForm = require('./views/registerform');
 const profilePage = require('./views/profile');
 const eventPage = require('./views/eventpage');
+const aboutPage = require('./views/about');
+
 
 // create job scheduled to run at midnight every day
 // const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) :)
@@ -55,20 +58,33 @@ const ensureAuthenticated = (req, res, next) => {
     res.redirect('/login');
 }
 
+
+//Connect to stylesheets
+app.use(express.static('public'));
+
+//Configure body-parser to read data sent by HTML form tags
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Configure body-parser to read JSON bodies
+app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
-    res.send(mainPage);
+    res.send(mainPage());
     // const thePage = page('hey there');
     // res.send(thePage);
-})
+});
 
 app.get('/about', (req,res)=>{
-    res.send('about');
-})
+    res.send(aboutPage());
+});
 
+app.get('/events', (req,res)=>{
+    res.send(eventPage());
+});
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     // console.log('This is the /new route');
-    res.send(profilePage);
+    res.send(profilePage());
 });
 
 app.get('/favorites', ensureAuthenticated, (req, res) => {
@@ -81,8 +97,8 @@ app.get('/favorites', ensureAuthenticated, (req, res) => {
 app.get('/register', (req, res) => {
     //Send them the signup form
     // res.send(page(registrationForm()));
-    res.send('register form');
-})
+    res.send(registerForm());
+});
 
 app.post('/register', (req, res) => {
     //Process the signup form
@@ -90,6 +106,8 @@ app.post('/register', (req, res) => {
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     //2. call user.add
+    console.log(newUsername);
+    console.log(newPassword);
     User.add(newUsername, newPassword)
         .then(newUser => {
             req.session.user = newUser;
@@ -101,7 +119,7 @@ app.post('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
     // res.send(page(login()));
-    res.send(loginForm);
+    res.send(loginForm());
 })
 
 app.post('/login', (req, res) => {
@@ -126,14 +144,6 @@ app.post('/login', (req, res) => {
 
 
 
-//Connect to stylesheets
-app.use(express.static('public'));
-
-//Configure body-parser to read data sent by HTML form tags
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// Configure body-parser to read JSON bodies
-app.use(bodyParser.json());
 
 app.get('/profile/:username([A-Z]+)', (req, res) => {
     // user's main page

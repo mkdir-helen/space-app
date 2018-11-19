@@ -18,19 +18,19 @@ function loginform(){
         
         <h1 class="login-header">Log in</h1>
         
-        <form class="login-container">
-            <p><input type="email" placeholder="Email"></p>
+        <form action="/login" method="POST" class="login-container">
+            <p><input type="text" placeholder="Username"></p>
             <p><input type="password" placeholder="Password"></p>
             <p>
                 <input type="submit" value="Buckle Up"> 
                 <button class="btn btn-danger">  
-                <a href=""> Sign in With Google Account
+                <a href="/google/login"> Sign in With Google Account
                 <i class="fab fa-google"></i>
                 </a>
                 </button>
             </p>
             <!-- TODO send to signup page -->
-            <p class="text--center">Not a member? <a href="#">Sign up now</a> 
+            <p class="text--center">Not a member? <a href="/register">Sign up now</a> 
         </form>
     </div>
     
