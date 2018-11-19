@@ -109,7 +109,6 @@ function getSunPos() {
             return Body.getByName('Sun')
             .then(sun => sun.addLocationPoint(parsedObjectData.ra.decimal, parsedObjectData.dec.decimal))
         })
-        
 }
 
 module.exports = fetchSpace

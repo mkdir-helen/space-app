@@ -15,6 +15,7 @@ insert into body_types
     (name)
 values
     ('star'),
+    ('planet'),
     ('comet'),
     ('asteroid'),
     ('satellite'),
