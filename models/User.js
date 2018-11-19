@@ -46,7 +46,7 @@ class User {
         returning id`, [null, null, null, username, hash, null, null])
         .then(data => {
             console.log(data);
-            const u = new User(data.id, data.name, data.lat, data.long, username, data.google_ID, data.thumbnail);
+            const u = new User(data.id, data.name, data.lat, data.long, username, hash, data.google_ID, data.thumbnail);
             return u;
         });
 
