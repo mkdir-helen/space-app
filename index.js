@@ -106,9 +106,9 @@ app.post('/register', (req, res) => {
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     //2. call user.add
-    console.log(newUsername);
-    console.log(newPassword);
-    User.add(newUsername, newPassword)
+    // console.log(newUsername);
+    // console.log(newPassword);
+    User.add('', null, null, newUsername, newPassword, '', '')
         .then(newUser => {
             req.session.user = newUser;
             res.redirect('/profile');
@@ -125,6 +125,8 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
     const loginUsername = req.body.username;
     const loginPassword = req.body.password;
+    // console.log(loginUsername);
+    // console.log(loginPassword);
    //2. Find a user whose name matches 'theUsername'
    User.getByUsername(loginUsername)
         .catch(err => {
@@ -132,12 +134,15 @@ app.post('/login', (req, res) => {
             res.redirect('/login');
         })
         .then(theUser => {
+            console.log(theUser);
             // const didMatch = bcrypt.compareSync(loginPassword, theUser.pwhash);
             if(theUser.passwordDoesMatch(loginPassword)){
                 req.session.user = theUser;
+                console.log('it worked or it exists');
                 res.redirect('/profile');
             }else{
                 res.redirect('/login');
+                console.log('boohoo');
             }
         })
 });

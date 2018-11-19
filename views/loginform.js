@@ -13,14 +13,14 @@ function loginform(){
         <title>Login </title>
     </head>
     
-    <form>
+    
     <div class="login">
         
         <h1 class="login-header">Log in</h1>
         
         <form action="/login" method="POST" class="login-container">
-            <p><input type="text" placeholder="Username"></p>
-            <p><input type="password" placeholder="Password"></p>
+            <p><input type="text" placeholder="Username" name="username"></p>
+            <p><input type="password" placeholder="Password" name="password"></p>
             <p>
                 <input type="submit" value="Buckle Up"> 
                 <button class="btn btn-danger">  

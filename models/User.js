@@ -4,17 +4,18 @@ const saltRounds = 10;
 
 class User {
 
-    constructor(id, name, google_ID, thumbnail, location, username, pwhash) {
+    constructor(id, name, lat, long, username, pwhash, google_ID, thumbnail ) {
         // define properties that
         // are also the names
         // of the database columns
         this.id = id;
         this.name = name;
-        this.location = location;
-        this.google_ID = google_ID;
+        this.lat = lat;
+        this.long = long;
         this.username = username;
-        this.thumbnail = thumbnail;
         this.pwhash = pwhash;
+        this.google_ID = google_ID;
+        this.thumbnail = thumbnail;
     }
 
     // CREATE
@@ -34,17 +35,18 @@ class User {
             });
     }
  
- static add(username, password) {
+ static add(name, lat, long, username, password, google_ID, thumbnail) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     return db.one(`
         insert into users 
-            (username, pwhash)
+            (name, lat, long, username, pwhash, google_ID, thumbnail)
         values
-            ($1, $2)
-        returning id`, [username, hash])
+            ($1, $2, $3, $4, $5, $6, $7)
+        returning id`, [null, null, null, username, hash, null, null])
         .then(data => {
-            const u = new User(data.id, username);
+            console.log(data);
+            const u = new User(data.id, data.name, data.lat, data.long, username, data.google_ID, data.thumbnail);
             return u;
         });
 
@@ -78,8 +80,8 @@ static getByUsername(username) {
     return db.one(`
         select * from users
         where username ilike '%$1:raw%'          
-    `, [username]).then(result => {
-        return new User(result.id, result.location, result.name, result.username,result.pwhash);
+    `, [username]).then(data => { console.log(data);
+        return new User(data.id, data.name, data.lat, data.long, username, data.pwhash, data.google_ID, data.thumbnail);
     })
 }
 
