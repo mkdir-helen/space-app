@@ -141,9 +141,7 @@ app.get('/:username([A-Z]+)', (req, res) => {
     .then(user => {
         Event.getByUser(user.id)
         .then(events => {
-            events.sort((event_a, event_b) => event_a.date.getTime() < event_b.date.getTime())
-            // console.log(events)
-            // debugger
+            events.sort((event_a, event_b) => event_a.date.getTime() < event_b.date.getTime() ? 1 : -1)
             const eventElements = []
             const dayElements = []
             const monthElements = []
