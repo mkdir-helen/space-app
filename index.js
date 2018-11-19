@@ -41,13 +41,13 @@ updateEvents()
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
-    
+
     if (req.session.user || req.isAuthenticated()) {
-      // req.user is available for use here
-      console.log('we are all good');
-      return next();
+        // req.user is available for use here
+        console.log('we are all good');
+        return next();
     }
-  
+
     console.log('clearly, they are not authenticated');
     // denied. redirect to login
     res.redirect('/login');
@@ -59,7 +59,7 @@ app.get('/', (req, res) => {
     // res.send(thePage);
 })
 
-app.get('/about', (req,res)=>{
+app.get('/about', (req, res) => {
     res.send('about');
 })
 
@@ -105,18 +105,18 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
     const loginUsername = req.body.username;
     const loginPassword = req.body.password;
-   //2. Find a user whose name matches 'theUsername'
-   User.getByUsername(loginUsername)
+    //2. Find a user whose name matches 'theUsername'
+    User.getByUsername(loginUsername)
         .catch(err => {
             console.log(err);
             res.redirect('/login');
         })
         .then(theUser => {
             // const didMatch = bcrypt.compareSync(loginPassword, theUser.pwhash);
-            if(theUser.passwordDoesMatch(loginPassword)){
+            if (theUser.passwordDoesMatch(loginPassword)) {
                 req.session.user = theUser;
                 res.redirect('/profile');
-            }else{
+            } else {
                 res.redirect('/login');
             }
         })
@@ -128,7 +128,9 @@ app.post('/login', (req, res) => {
 app.use(express.static('front-end'));
 
 //Configure body-parser to read data sent by HTML form tags
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 // Configure body-parser to read JSON bodies
 app.use(bodyParser.json());
@@ -138,6 +140,56 @@ app.get('/:username([A-Z]+)', (req, res) => {
     // get all of user's events
     // and build page
     User.getByUsername(req.params.username)
+    
+        .then(user => {
+            Event.getByUser(user.id)
+                .then(events => {
+                    debugger
+                    events.sort((event_a, event_b) => event_a.date.getDate() > event_b.date.getDate())
+                    const eventElements = []
+                    const dayElements = []
+                    const monthElements = []
+                    const yearElements = []
+                    let previousEvent
+                    while (events.length > 0) {
+                        const currentEvent = events.pop()
+                        // if it's for the same day or the first event
+                        debugger
+                        if (eventElements.length == 0 || previousEvent.date.getDate() == currentEvent.date.getDate()) {
+                            eventElements.push(eventElement(currentEvent.name))
+                            // if it is for a new day in same month
+                        } else if (previousEvent.date.getMonth() == currentEvent.date.getMonth()) {
+                            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+                            // reset eventElements array
+                            eventElements.length = 0
+                            eventElements.push(eventElement(currentEvent.name))
+                            // if it is for a new month in same year
+                        } else if (previousEvent.date.getYear() == currentEvent.date.getYear()) {
+                            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+                            monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
+                            // lock id dayElements and reset
+                            dayElements.length = 0
+                            eventElements.length = 0
+                            eventElements.push(eventElement(currentEvent.name))
+                            // if it is a new year
+                        } else {
+                            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+                            monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
+                            yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
+                            // reset month, day, and events
+                            monthElements.length = 0
+                            dayElements.length = 0
+                            eventElements.length = 0
+                            eventElements.push(eventElement(currentEvent.name))
+                        }
+                        previousEvent = currentEvent
+                    }
+                    dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+                    monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
+                    yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
+                    res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
+                })
+
     .then(user => {
         Event.getByUser(user.id)
         .then(events => {
@@ -183,8 +235,8 @@ app.get('/:username([A-Z]+)', (req, res) => {
             monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
             yearElements.push(yearElement(previousEvent.date.getFullYear(), monthElements.join('')))
             res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
+
         })
-    })
 })
 
 app.listen(3000, () => {
