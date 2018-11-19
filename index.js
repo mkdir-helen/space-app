@@ -12,7 +12,7 @@ const app = require('./auth');
 const schedule = require('node-schedule')
 const fetchClouds = require('./fetchClouds')
 const fetchSpace = require('./fetchSpace')
-const fetchCad = require('./fetchCad')
+const fetchDoomsday = require('./fetchDoomsday')
 
 const eventElement = require('./views/event')
 const dayElement = require('./views/day')
@@ -36,7 +36,7 @@ function updateEvents() {
     // get weather forecast
     fetchClouds([37.8267, -122.4233])
     fetchSpace()
-    fetchCad()
+    fetchDoomsday()
 }
 
 updateEvents()

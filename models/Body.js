@@ -8,7 +8,10 @@ class Body {
     }
 
     
-    
+    static add(name, body_type) {
+        return db.one('insert into bodies (name, body_type) values ($1, $2) returning id', [name, body_type])
+        .then(result => new Body(result.id, name, body_type))
+    }
     
     
     addLocationPoint(ra, dec) {
@@ -34,18 +37,18 @@ class Body {
 
 
 
-static getByName(name) {
-    return db.any('select * from bodies where name=$1', [name])
-    .then(bodyArray => bodyArray.map(body => new Body(body.id, body.name, body.body_type)))
-}
+    static getByName(name) {
+        return db.one('select * from bodies where name=\'$1:raw\'', [name])
+        .then(body => new Body(body.id, body.name, body.body_type))
+    }
 
 
-getFavUsers() {
-    return db.any(`
-        select * from favorites
-            where body_id = $1
-    `, [this.id]);
-}
+    getFavUsers() {
+        return db.any(`
+            select * from favorites
+                where body_id = $1
+        `, [this.id]);
+    }
 
 
 
