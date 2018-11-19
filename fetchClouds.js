@@ -5,8 +5,6 @@ const User = require('./models/User')
 function fetchClouds(location) {
   return User.getAll()
   .then(users => {
-    console.log(users)
-    debugger
     return Promise.all(users.map(user => {
       return axios.get(`https://api.darksky.net/forecast/4f6c922b9b20ecf763ece25f86c994d0/${user.lat},${user.lon}?exclude=[currently, minutely, hourly]`)
       .then(parseResponse)
@@ -36,20 +34,18 @@ function parseForecast(weatherData) {
 }
 
 function updateForecast(cloudForecast, user) {
-  debugger
   // check each date of forecast
   return Promise.all(cloudForecast.map(day => {
-    debugger
-  // get any events on the days of the forecast
-  return Event.getByDate(day.time)
-  .then(eventArray => {
-    return Promise.all([deleteClearSkies(findClearSkies(eventArray, user.id)),
-                        deleteMoonSlivers(findMoonSlivers(eventArray, user.id))])
-  })
-  .then(() => {
-    return Promise.all([
-      addClearSky(day, user.id),
-      addMoonSliver(day, user.id)
+    // get any events on the days of the forecast
+    return Event.getByDate(day.time)
+    .then(eventArray => {
+      return Promise.all([deleteClearSkies(findClearSkies(eventArray, user.id)),
+                          deleteMoonSlivers(findMoonSlivers(eventArray, user.id))])
+    })
+    .then(() => {
+      return Promise.all([
+        addClearSky(day, user.id),
+        addMoonSliver(day, user.id)
     ])
   })
   // .then(() => {
@@ -78,7 +74,7 @@ function addClearSky(day, user_id) {
 
 function findMoonSlivers(eventArray, user_id) {
   // delete any clear sky events in database on these days
-  return eventArray.filter(event => event.name == 'Low moonlight' && event.user_id == user_id)
+  return eventArray.filter(event => (event.name == 'Low moonlight' || event.name.includes('Moonphase')) && event.user_id == user_id)
 }
 
 // return promise that all clear skies will be deleted
