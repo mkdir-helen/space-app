@@ -60,8 +60,6 @@ function findClearSkies(eventArray, user_id) {
 
 // return promise that all clear skies will be deleted
 function deleteClearSkies(clearSkyEventArray) {
-  console.log(clearSkyEventArray)
-  debugger
   return Promise.all(clearSkyEventArray.map(clearSkyEvent => clearSkyEvent.delete()))
 }
 
