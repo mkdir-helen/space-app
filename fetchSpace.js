@@ -7,14 +7,14 @@ const api_key = require('./secret')
 
 function fetchSpace() {
     // get space bodies out of database and fetch all of their names
-    Body.getAll()
+    return Body.getAll()
     // for each body, fetch that data
     .then(bodies => bodies.forEach(fetchSpaceBody))
 }
 
 function fetchSpaceBody(body) {
     if (body.name != 'Weather') {
-        axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
+        return axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
         .then(parseResponse)
         .then(parseObjectData)
         // body.addLocationPoint returns an object with ra and dec
@@ -39,17 +39,17 @@ function checkVisibility(objectPosition) {
     const objectRa = objectPosition.ra
     const objectDec = objectPosition.dec
     const currentTime = new Date()
-    Body.getByName('Sun')
+    return Body.getByName('Sun')
     .then(sun => {
-        sun[0].getPosition()
+        return sun[0].getPosition()
         .then(sunPosition => {
             console.log(sunPosition.ra, objectPosition.ra)
             debugger
             if (sunPosition.ra - 90 > objectPosition.ra || sunPosition.ra + 90 < objectPosition.ra) {
                 // get all users
-                User.getAll()
+                return User.getAll()
                 .then(users => {
-                    users.forEach(user => {
+                    return Promise.all(users.map(user => {
                         // get their positions
                             if (user.lat > 0) {
                                 if (objectDec > 90 - user.lat) {
@@ -72,7 +72,8 @@ function checkVisibility(objectPosition) {
                                         .then(user.addEvent)
                                 }
                             }
-                    })
+                        })
+                    )
                 })
             }   
         })
