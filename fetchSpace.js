@@ -52,42 +52,41 @@ function checkVisibility(objectPosition) {
         const body = objectPosition.body
         const objectRa = objectPosition.ra
         const objectDec = objectPosition.dec
-        const currentTime = new Date()
-        Body.getByName('Sun')
-        .then(sun => {
-            return sun[0].getPosition()
-            .then(sunPosition => {
-                if (sunPosition.ra - 90 > objectPosition.ra || sunPosition.ra + 90 < objectPosition.ra) {
-                    // get all users
-                    return User.getAll()
-                    .then(users => {
+        const currentTime = new Date() 
+        return User.getAll()
+        .then(users => {
+            Body.getByName('Sun')
+            .then(sun => {
+                return sun[0].getPosition()
+                .then(sunPosition => {
+                    if (sunPosition.ra - 90 > objectPosition.ra || sunPosition.ra + 90 < objectPosition.ra) {
+                        // get all users
+                        // get their positions
                         return Promise.all(users.map(user => {
-                            // get their positions
-                                if (user.lat > 0) {
-                                    if (objectDec > 90 - user.lat) {
-                                        // object is always visible at night
-                                        return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
-                                            .then(user.addEvent)
-                                    } else if (objectDec > -90 + user.lat) {
-                                        // object is sometimes visible at night
-                                        return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
-                                            .then(user.addEvent)
-                                    }
-                                } else {
-                                    if (objectDec < -90 - user.lat) {
-                                        // object is always visible at night
-                                        return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
-                                            .then(user.addEvent)
-                                    } else if (objectDec < 90 + user.lat) {
-                                        // object is sometimes visible at night
-                                        return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
-                                            .then(user.addEvent)
-                                    }
+                            if (user.lat > 0) {
+                                if (objectDec > 90 - user.lat) {
+                                    // object is always visible at night
+                                    return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
+                                        .then(user.addEvent)
+                                } else if (objectDec > -90 + user.lat) {
+                                    // object is sometimes visible at night
+                                    return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
+                                        .then(user.addEvent)
                                 }
-                            })
-                        )
-                    })
-                }   
+                            } else {
+                                if (objectDec < -90 - user.lat) {
+                                    // object is always visible at night
+                                    return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
+                                        .then(user.addEvent)
+                                } else if (objectDec < 90 + user.lat) {
+                                    // object is sometimes visible at night
+                                    return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
+                                        .then(user.addEvent)
+                                }
+                            }
+                        }))
+                    }
+                })
             })         
         })
     })
