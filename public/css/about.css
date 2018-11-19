@@ -1,7 +1,10 @@
 html {
     box-sizing: border-box;
 }
-  *, *:before, *:after {
+
+*,
+*:before,
+*:after {
     box-sizing: inherit;
 }
 
@@ -38,10 +41,7 @@ h1.team-h1 {
     clear: both;
 }
 
-/**
-   * For IE 6/7 only
-   * Include this rule to trigger hasLayout and contain floats.
-   */
+
 .cf {
     *zoom: 1;
 }
@@ -65,9 +65,7 @@ h1.team-h1 {
     margin-right: 5%;
 }
 
-.team-member:last-child {
-    margin-right: 0;
-}
+
 
 
 .team-member span,
@@ -97,7 +95,7 @@ h1.team-h1 {
 
 
 .team-photo:hover {
-    transform: scale(0.9);
+    transform: scale();
     cursor: pointer;
 }
 
@@ -119,15 +117,14 @@ h1.team-h1 {
 @media (max-width:650px) {
     .team-member {
         float: none;
-        width: 30%;
+        display: block;
+        margin: 50px auto;
+        width: 40%;
         text-align: center;
     }
-    .team-photo {
-        border-radius: 80%;
-        text-align: center;
-        margin: auto;
-        max-width: 100%;
-        height: auto;
-        transition: 0.1s transform ease-in-out;
+
+    .team-member h3,
+    .team-member span {
+        margin: 15px auto;
     }
 }
