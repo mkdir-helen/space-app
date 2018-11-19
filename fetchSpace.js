@@ -9,7 +9,7 @@ function fetchSpace() {
     // get space bodies out of database and fetch all of their names
     return Body.getAll()
     // for each body, fetch that data
-    .then(bodies => bodies.forEach(fetchSpaceBody))
+    .then(bodies => Promise.all(bodies.map(fetchSpaceBody))
 }
 
 function fetchSpaceBody(body) {
