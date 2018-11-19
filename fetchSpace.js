@@ -7,14 +7,14 @@ const api_key = require('./secret')
 
 function fetchSpace() {
     // get space bodies out of database and fetch all of their names
-    Body.getAll()
+    return Body.getAll()
     // for each body, fetch that data
-    .then(bodies => bodies.forEach(fetchSpaceBody))
+    .then(bodies => Promise.all(bodies.map(fetchSpaceBody)))
 }
 
 function fetchSpaceBody(body) {
     if (body.name != 'Weather') {
-        axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
+        return axios.get(`http://www.strudel.org.uk/lookUP/json/?name=${body.name}`)
         .then(parseResponse)
         .then(parseObjectData)
         // body.addLocationPoint returns an object with ra and dec
@@ -35,46 +35,60 @@ function parseObjectData(objectData) {
 }
 
 function checkVisibility(objectPosition) {
-    const body = objectPosition.body
-    const objectRa = objectPosition.ra
-    const objectDec = objectPosition.dec
-    const currentTime = new Date()
-    Body.getByName('Sun')
-    .then(sun => {
-        sun[0].getPosition()
-        .then(sunPosition => {
-            // console.log(sunPosition.ra, objectPosition.ra)
-            // // debugger
-            if (sunPosition.ra - 90 > objectPosition.ra || sunPosition.ra + 90 < objectPosition.ra) {
-                // get all users
-                User.getAll()
-                .then(users => {
-                    users.forEach(user => {
-                        // get their positions
-                            if (user.lat > 0) {
-                                if (objectDec > 90 - user.lat) {
-                                    // object is always visible at night
-                                    return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
-                                        .then(user.addEvent)
-                                } else if (objectDec > -90 + user.lat) {
-                                    // object is sometimes visible at night
-                                    return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
-                                        .then(user.addEvent)
+    // find events added previously
+    // event must be on this date
+    return Event.getByDate(objectPosition.date)
+    .then(events => {
+        // event must be for this body
+        events.forEach(event => {
+            if (event.body_id == objectPosition.body.id) {
+                // delete events
+                return event.delete()
+                // where we had checked the visibility before
+            }
+        })
+    })
+    .then(() => {
+        const body = objectPosition.body
+        const objectRa = objectPosition.ra
+        const objectDec = objectPosition.dec
+        const currentTime = new Date()
+        Body.getByName('Sun')
+        .then(sun => {
+            return sun[0].getPosition()
+            .then(sunPosition => {
+                if (sunPosition.ra - 90 > objectPosition.ra || sunPosition.ra + 90 < objectPosition.ra) {
+                    // get all users
+                    return User.getAll()
+                    .then(users => {
+                        return Promise.all(users.map(user => {
+                            // get their positions
+                                if (user.lat > 0) {
+                                    if (objectDec > 90 - user.lat) {
+                                        // object is always visible at night
+                                        return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
+                                            .then(user.addEvent)
+                                    } else if (objectDec > -90 + user.lat) {
+                                        // object is sometimes visible at night
+                                        return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
+                                            .then(user.addEvent)
+                                    }
+                                } else {
+                                    if (objectDec < -90 - user.lat) {
+                                        // object is always visible at night
+                                        return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
+                                            .then(user.addEvent)
+                                    } else if (objectDec < 90 + user.lat) {
+                                        // object is sometimes visible at night
+                                        return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
+                                            .then(user.addEvent)
+                                    }
                                 }
-                            } else {
-                                if (objectDec < -90 - user.lat) {
-                                    // object is always visible at night
-                                    return Event.add(`${body.name} is visible`, currentTime, body.id, user.id)
-                                        .then(user.addEvent)
-                                } else if (objectDec < 90 + user.lat) {
-                                    // object is sometimes visible at night
-                                    return Event.add(`${body.name} is sometimes visible`, currentTime, body.id, user.id)
-                                        .then(user.addEvent)
-                                }
-                            }
+                            })
+                        )
                     })
-                })
-            }   
+                }   
+            })         
         })
     })
 }
