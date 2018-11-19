@@ -80,7 +80,7 @@ static getByUsername(username) {
         select * from users
         where username ilike '%$1:raw%'          
     `, [username]).then(result => {
-        return new User(result.id, result.location, result.name, result.username,result.pwhash);
+        return new User(result.id, result.name, null, null, result.lat, result.lon,  result.username,result.pwhash);
     })
 }
 

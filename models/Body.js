@@ -17,6 +17,14 @@ class Body {
             return { body: this, ra: result.ra, dec: result.dec, date: result.date }
         })
     }
+
+    getPosition() {
+        // returns last known position
+        return db.one(`select * from body_locations join bodies on body_id=bodies.id where bodies.id=$1 order by bodies.id desc limit 1`,[this.id])
+        .then(result => {
+            return { ra: result.ra, dec: result.dec }
+        })
+    }
     
     
     static getAll() {
@@ -27,8 +35,8 @@ class Body {
 
 
 static getByName(name) {
-    return db.any('select * from events where name=$1', [name])
-    .then(bodyArray => bodyArray.map(body => new body(body.id, body.name,)))
+    return db.any('select * from bodies where name=$1', [name])
+    .then(bodyArray => bodyArray.map(body => new Body(body.id, body.name, body.body_type)))
 }
 
 // update
