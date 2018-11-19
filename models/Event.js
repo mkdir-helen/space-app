@@ -11,7 +11,7 @@ class Event {
 
     // Create
     static add(name, date, body_id, user_id) {
-        return db.one('insert into events (name, date) values ($1, $2) returning id', [name, date])
+        return db.one('insert into events (name, date, body_id, user_id) values ($1, $2, $3, $4) returning id', [name, date, body_id, user_id])
         .then(result => new Event(result.id, name, date, body_id, user_id))
     }
     // retrieve
@@ -32,6 +32,11 @@ class Event {
 
     static getByUser(user_id) {
         return db.any('select * from events where user_id=$1', [user_id])
+        .then(eventArray => eventArray.map(event => new Event(event.id, event.name, event.date, event.body_id, event.user_id)))
+    }
+
+    static getByBody(body_id) {
+        return db.any('select * from events where body_id=$1', [body_id])
         .then(eventArray => eventArray.map(event => new Event(event.id, event.name, event.date, event.body_id, event.user_id)))
     }
     // update

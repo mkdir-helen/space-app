@@ -9,17 +9,7 @@ const User = require('./models/User');
 const Body = require('./models/Body');
 const Event = require('./models/Event');
 const app = require('./auth');
-const schedule = require('node-schedule');
-const fetchClouds = require('./fetchClouds');
-// const fetchSpace = require('./fetchSpace');
 
-const eventElement = require('./views/event');
-const dayElement = require('./views/day');
-const monthElement = require('./views/month');
-const yearElement = require('./views/year');
-const contentElement = require('./views/content');
-const bodyElement = require('./views/body');
-const pageElement = require('./views/page');
 
 const mainPage = require('./views/mainpage');
 const loginForm = require('./views/loginform');
@@ -28,31 +18,47 @@ const profilePage = require('./views/profile');
 const eventPage = require('./views/eventpage');
 const aboutPage = require('./views/about');
 
+const schedule = require('node-schedule')
+const fetchClouds = require('./fetchClouds')
+const fetchSpace = require('./fetchSpace')
+const fetchDoomsday = require('./fetchDoomsday')
+
+const eventElement = require('./views/event')
+const dayElement = require('./views/day')
+const monthElement = require('./views/month')
+const monthNameArray = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+]
+const yearElement = require('./views/year')
+const contentElement = require('./views/content')
+const bodyElement = require('./views/body')
+const pageElement = require('./views/page')
 
 // create job scheduled to run at midnight every day
 // const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) :)
 
 // will use user location
 // currently using coordinates for los angeles
-// function updateEvents() { :)
-//     // User.getLocation()
-//     // .then(fetchClouds)
-//     // get weather forecast
-//     // fetchClouds([37.8267, -122.4233])
-//     fetchSpace()
-// }
+function updateEvents() {
+    // User.getLocation()
+    // .then(fetchClouds)
+    // get weather forecast
+    fetchClouds([37.8267, -122.4233])
+    fetchSpace()
+    fetchDoomsday()
+}
 
 // updateEvents() :)
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
-    
+
     if (req.session.user || req.isAuthenticated()) {
-      // req.user is available for use here
-      console.log('we are all good');
-      return next();
+        // req.user is available for use here
+        console.log('we are all good');
+        return next();
     }
-  
+
     console.log('clearly, they are not authenticated');
     // denied. redirect to login
     res.redirect('/login');
@@ -125,10 +131,8 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
     const loginUsername = req.body.username;
     const loginPassword = req.body.password;
-    // console.log(loginUsername);
-    // console.log(loginPassword);
-   //2. Find a user whose name matches 'theUsername'
-   User.getByUsername(loginUsername)
+    //2. Find a user whose name matches 'theUsername'
+    User.getByUsername(loginUsername)
         .catch(err => {
             console.log(err);
             res.redirect('/login');
@@ -136,11 +140,11 @@ app.post('/login', (req, res) => {
         .then(theUser => {
             console.log(theUser);
             // const didMatch = bcrypt.compareSync(loginPassword, theUser.pwhash);
-            if(theUser.passwordDoesMatch(loginPassword)){
+            if (theUser.passwordDoesMatch(loginPassword)) {
                 req.session.user = theUser;
                 console.log('it worked or it exists');
                 res.redirect('/profile');
-            }else{
+            } else {
                 res.redirect('/login');
                 console.log('boohoo');
             }
@@ -158,8 +162,7 @@ app.get('/profile/:username([A-Z]+)', (req, res) => {
     .then(user => {
         Event.getByUser(user.id)
         .then(events => {
-            debugger
-            events.sort((event_a, event_b) => event_a.date.getDate() > event_b.date.getDate())
+            events.sort((event_a, event_b) => event_a.date.getTime() < event_b.date.getTime() ? 1 : -1)
             const eventElements = []
             const dayElements = []
             const monthElements = []
@@ -168,28 +171,27 @@ app.get('/profile/:username([A-Z]+)', (req, res) => {
             while (events.length > 0) {
                 const currentEvent = events.pop()
                 // if it's for the same day or the first event
-                debugger
                 if (eventElements.length == 0 || previousEvent.date.getDate() == currentEvent.date.getDate()) {
                     eventElements.push(eventElement(currentEvent.name))
                 // if it is for a new day in same month
                 } else if (previousEvent.date.getMonth() == currentEvent.date.getMonth()) {
-                    dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
+                    dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
                     // reset eventElements array
                     eventElements.length = 0
                     eventElements.push(eventElement(currentEvent.name))
                     // if it is for a new month in same year
-                } else if (previousEvent.date.getYear() == currentEvent.date.getYear()) {
-                    dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
-                    monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
+                } else if (previousEvent.date.getFullYear() == currentEvent.date.getFullYear()) {
+                    dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
+                    monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
                     // lock id dayElements and reset
                     dayElements.length = 0
                     eventElements.length = 0
                     eventElements.push(eventElement(currentEvent.name))
                     // if it is a new year
                 } else {
-                    dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
-                    monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
-                    yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
+                    dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
+                    monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
+                    yearElements.push(yearElement(previousEvent.date.getFullYear(), monthElements.join('')))
                     // reset month, day, and events
                     monthElements.length = 0
                     dayElements.length = 0
@@ -198,9 +200,9 @@ app.get('/profile/:username([A-Z]+)', (req, res) => {
                 }
                 previousEvent = currentEvent
             }
-            dayElements.push(dayElement(previousEvent.date.getDay(), eventElements.join('')))
-            monthElements.push(monthElement(previousEvent.date.getMonth(), dayElements.join('')))
-            yearElements.push(yearElement(previousEvent.date.getYear(), monthElements.join('')))
+            dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
+            monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
+            yearElements.push(yearElement(previousEvent.date.getFullYear(), monthElements.join('')))
             res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
         })
     })
