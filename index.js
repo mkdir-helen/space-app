@@ -140,11 +140,9 @@ app.get('/:username([A-Z]+)', (req, res) => {
     // get all of user's events
     // and build page
     User.getByUsername(req.params.username)
-    
         .then(user => {
             Event.getByUser(user.id)
                 .then(events => {
-                    debugger
                     events.sort((event_a, event_b) => event_a.date.getDate() > event_b.date.getDate())
                     const eventElements = []
                     const dayElements = []
@@ -154,7 +152,6 @@ app.get('/:username([A-Z]+)', (req, res) => {
                     while (events.length > 0) {
                         const currentEvent = events.pop()
                         // if it's for the same day or the first event
-                        debugger
                         if (eventElements.length == 0 || previousEvent.date.getDate() == currentEvent.date.getDate()) {
                             eventElements.push(eventElement(currentEvent.name))
                             // if it is for a new day in same month
