@@ -2,7 +2,7 @@ const axios = require('axios')
 const Event = require('./models/Event')
 const User = require('./models/User')
 
-function fetchClouds(location) {
+function fetchClouds() {
   return User.getAll()
   .then(users => {
     return Promise.all(users.map(user => {
