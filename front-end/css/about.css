@@ -1,20 +1,14 @@
 html {
     box-sizing: border-box;
 }
-  *, *:before, *:after {
+
+*,
+*:before,
+*:after {
     box-sizing: inherit;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Exo+2:700');
-* {
-margin: 0 auto;
-padding: 0;
-}
-
-
-
 body {
-    background-image: url('../img/OrionRedBlue_Lindemann_960.jpg');
     background-color: #212121;
     background-blend-mode: overlay;
     background-position: center;
@@ -22,56 +16,115 @@ body {
     text-align: center;
 }
 
-h1 {
-    color: whitesmoke;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 46px;
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-p {
-
-    max-width: 700px;
-    min-height: 200px;
-    padding: 0;
-    color: whitesmoke;
-    font-family: OpenSans;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 22px;
-}
-
-.Team-Section{
-    overflow: hidden;
+h1.team-h1 {
+    margin: 0;
+    position: absolute;
+    top: -16px;
     text-align: center;
-    padding: 60px;
+    left: 40%;
+    font-family: georgia;
+    font-style: italic;
+    background-color: white;
+    padding: 0px 20px;
+    color: #222;
 }
 
-.Team-Section h2 {
-    text-transform: uppercase;
-    margin-bottom: 60;
-    color: white;
-    font-size: 40px;
+.cf:before,
+.cf:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
 }
 
-.Team-images{
-    margin-bottom: 40px;
-}
-.Team-images img{
-    display: inline-block;
-    margin: 0 30px;
-    width: 160px;
-    height: 160px;
-    overflow: hidden;
-    border-radius: 50%;
+.cf:after {
+    clear: both;
 }
 
-.border{
-    display: block;
+
+.cf {
+    *zoom: 1;
+}
+
+.team-container {
+    max-width: 1000px;
     margin: auto;
-    background: red;
-    width: 160px;
-    height: 3px;
-    margin-bottom: 60px;
+    border-top: 1px #e9e9e9 solid;
+    border-bottom: 1px #e9e9e9 solid;
+    padding-top: 5em;
+    padding-bottom: 5em;
+    margin-top: 3em;
+    position: relative;
+}
+
+.team-member {
+    height: 18%;
+    width: 19%;
+    float: left;
+    text-align: center;
+    margin-right: 5%;
+}
+
+
+
+
+.team-member span,
+.team-member h3 {
+    max-width: 200px;
+    font-family: sans-serif;
+    letter-spacing: -1px;
+}
+
+.team-member h3 {
+    color: rgb(245, 247, 247);
+}
+
+.team-member span {
+    display: block;
+
+}
+
+.team-photo {
+    border-radius: 60%;
+    text-align: center;
+    margin: auto;
+    max-width: 100%;
+    height: auto;
+    transition: 0.1s transform ease-in-out;
+}
+
+
+.team-photo:hover {
+    transform: scale();
+    cursor: pointer;
+}
+
+
+/* code for phone layout */
+@media (max-width:850px) {
+    .team-member {
+        width: 15%;
+        margin-left: 4%;
+        margin-right: 4%;
+        margin-bottom: 40px;
+
+    }
+
+}
+
+
+
+@media (max-width:650px) {
+    .team-member {
+        float: none;
+        display: block;
+        margin: 50px auto;
+        width: 40%;
+        text-align: center;
+    }
+
+    .team-member h3,
+    .team-member span {
+        margin: 15px auto;
+    }
 }
