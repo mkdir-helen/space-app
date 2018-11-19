@@ -14,7 +14,7 @@ padding: 0;
 
 
 body {
-    background: url(https://apod.nasa.gov/apod/image/1810/OrionRedBlue_Lindemann_960.jpg);
+    background: url(https://apod.nasa.gov/apod/image/0802/LBT_seip800.jpg);
     background-color: #212121;
     background-blend-mode: overlay;
     background-position: center;
@@ -42,10 +42,9 @@ p {
     line-height: 22px;
 }
 
-.Team-images {
-    
+img{
+    max-width: 500px;
 }
-
 @media screen and (max-width: 768px) {
 
     h1 {
@@ -68,6 +67,10 @@ p {
         line-height: 22px;
     }
     
+    img{
+        max-width: 300px;
+    }
+
 
     }
 
@@ -92,7 +95,5 @@ p {
             font-weight: 300;
             line-height: 22px;
         }
-        
-    
         
     }

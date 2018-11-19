@@ -75,3 +75,120 @@ p {
     height: 3px;
     margin-bottom: 60px;
 }
+
+@media screen and (max-width: 768px) {
+
+    h1 {
+        color: whitesmoke;
+        font-family: 'Exo 2', sans-serif;
+        font-size: 30px;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    
+    p {
+    
+        max-width: 700px;
+        min-height: 200px;
+        padding: 0;
+        color: whitesmoke;
+        font-family: OpenSans;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 22px;
+    }
+    
+    .Team-Section{
+        overflow: hidden;
+        text-align: center;
+        padding: 60px;
+    }
+    
+    .Team-Section h2 {
+        text-transform: uppercase;
+        margin-bottom: 60;
+        color: white;
+        font-size: 30px;
+    }
+    
+    .Team-images{
+        margin-bottom: 20px;
+    }
+    .Team-images img{
+        display: inline-block;
+        margin: 0 20px;
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+    
+    .border{
+        display: block;
+        margin: auto;
+        background: red;
+        width: 160px;
+        height: 3px;
+        margin-bottom: 60px;
+    }
+
+
+    }
+
+
+    @media screen and (max-width: 414px) {
+        h1 {
+            color: whitesmoke;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 46px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        
+        p {
+        
+            max-width: 700px;
+            min-height: 200px;
+            padding: 0;
+            color: whitesmoke;
+            font-family: OpenSans;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 22px;
+        }
+        
+        .Team-Section{
+            overflow: hidden;
+            text-align: center;
+            padding: 60px;
+        }
+        
+        .Team-Section h2 {
+            text-transform: uppercase;
+            margin-bottom: 60;
+            color: white;
+            font-size: 40px;
+        }
+        
+        .Team-images{
+            margin-bottom: 40px;
+        }
+        .Team-images img{
+            display: inline-block;
+            margin: 0 30px;
+            width: 160px;
+            height: 160px;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+        
+        .border{
+            display: block;
+            margin: auto;
+            background: red;
+            width: 160px;
+            height: 3px;
+            margin-bottom: 60px;
+        }
+        
+    }
