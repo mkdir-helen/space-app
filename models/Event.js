@@ -11,7 +11,7 @@ class Event {
 
     // Create
     static add(name, date, body_id, user_id) {
-        return db.one('insert into events (name, date) values ($1, $2) returning id', [name, date])
+        return db.one('insert into events (name, date, body_id, user_id) values ($1, $2, $3, $4) returning id', [name, date, body_id, user_id])
         .then(result => new Event(result.id, name, date, body_id, user_id))
     }
     // retrieve

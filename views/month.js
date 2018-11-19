@@ -1,7 +1,7 @@
 function month(monthName, days) {
     return `
-    <h1 class="Week-Title">${monthName}</h1>
     <div class="week">
+    <h1 class="Week-Title sticky">${monthName}</h1>
         ${days}
     </div>
     `

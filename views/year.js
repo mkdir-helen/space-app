@@ -1,9 +1,9 @@
 function year(yearName, months) {
     return `
         <div class="year">
-            <h1>${yearName}</h1>
+            <h1 class="sticky">${yearName}</h1>
+            </div>
             ${months}
-        </div>
     `
 }
 
