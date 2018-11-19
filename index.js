@@ -154,7 +154,7 @@ app.post('/login', (req, res) => {
 
 
 
-app.get('/profile/:username([A-Z]+)', (req, res) => {
+app.get('/profile/:username([A-Z]+)', ensureAuthenticated, (req, res) => {
     // user's main page
     // get all of user's events
     // and build page
