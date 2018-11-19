@@ -45,7 +45,7 @@ function updateEvents() {
     // get weather forecast
     // fetchClouds([37.8267, -122.4233])
     // fetchSpace()
-    // fetchDoomsday()
+    fetchDoomsday()
 }
 
 updateEvents() 
