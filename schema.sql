@@ -5,8 +5,8 @@ create table users (
   name text,
   lat float,
   long float,
-  username varchar(200) not null,
-  pwhash varchar(60) not null,
+  username varchar(200),
+  pwhash varchar(60),
   google_ID text,
   thumbnail text
 );

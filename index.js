@@ -9,32 +9,37 @@ const User = require('./models/User');
 const Body = require('./models/Body');
 const Event = require('./models/Event');
 const app = require('./auth');
-const schedule = require('node-schedule')
-const fetchClouds = require('./fetchClouds')
-const fetchSpace = require('./fetchSpace')
+const schedule = require('node-schedule');
+const fetchClouds = require('./fetchClouds');
+// const fetchSpace = require('./fetchSpace');
 
-const eventElement = require('./views/event')
-const dayElement = require('./views/day')
-const monthElement = require('./views/month')
-const yearElement = require('./views/year')
-const contentElement = require('./views/content')
-const bodyElement = require('./views/body')
-const pageElement = require('./views/page')
+const eventElement = require('./views/event');
+const dayElement = require('./views/day');
+const monthElement = require('./views/month');
+const yearElement = require('./views/year');
+const contentElement = require('./views/content');
+const bodyElement = require('./views/body');
+const pageElement = require('./views/page');
+
+const mainPage = require('./views/mainpage');
+const loginForm = require('./views/loginform');
+const profilePage = require('./views/profile');
+const eventPage = require('./views/eventpage');
 
 // create job scheduled to run at midnight every day
-const j = schedule.scheduleJob('* 0 0 * * *', updateEvents)
+// const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) :)
 
 // will use user location
 // currently using coordinates for los angeles
-function updateEvents() {
-    // User.getLocation()
-    // .then(fetchClouds)
-    // get weather forecast
-    // fetchClouds([37.8267, -122.4233])
-    fetchSpace()
-}
+// function updateEvents() { :)
+//     // User.getLocation()
+//     // .then(fetchClouds)
+//     // get weather forecast
+//     // fetchClouds([37.8267, -122.4233])
+//     fetchSpace()
+// }
 
-updateEvents()
+// updateEvents() :)
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
@@ -51,7 +56,7 @@ const ensureAuthenticated = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-    res.send('Home');
+    res.send(mainPage);
     // const thePage = page('hey there');
     // res.send(thePage);
 })
@@ -63,7 +68,7 @@ app.get('/about', (req,res)=>{
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     // console.log('This is the /new route');
-    res.send('profile');
+    res.send(profilePage);
 });
 
 app.get('/favorites', ensureAuthenticated, (req, res) => {
@@ -96,7 +101,7 @@ app.post('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
     // res.send(page(login()));
-    res.send('login');
+    res.send(loginForm);
 })
 
 app.post('/login', (req, res) => {
@@ -130,7 +135,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Configure body-parser to read JSON bodies
 app.use(bodyParser.json());
 
-app.get('/:username([A-Z]+)', (req, res) => {
+app.get('/profile/:username([A-Z]+)', (req, res) => {
     // user's main page
     // get all of user's events
     // and build page
