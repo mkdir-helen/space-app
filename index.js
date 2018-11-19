@@ -112,13 +112,13 @@ app.post('/register', (req, res) => {
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     //2. call user.add
-    // console.log(newUsername);
-    // console.log(newPassword);
-    User.add('', null, null, newUsername, newPassword, '', '')
-        .then(newUser => {
-            req.session.user = newUser;
-            res.redirect(`/profile/${newUsername}`);
-        })
+    debugger
+    // give users atlanta's coordinates by default
+    User.add(newUsername, 33, -84, newUsername, newPassword, '', '')
+    .then(newUser => {
+        req.session.user = newUser;
+        res.redirect(`/profile/${newUsername}`);
+    })
 
 })
 
@@ -143,7 +143,7 @@ app.post('/login', (req, res) => {
             if (theUser.passwordDoesMatch(loginPassword)) {
                 req.session.user = theUser;
                 console.log('it worked or it exists');
-                res.redirect('/profile');
+                res.redirect(`/profile/${theUser.username}`);
             } else {
                 res.redirect('/login');
                 console.log('boohoo');
