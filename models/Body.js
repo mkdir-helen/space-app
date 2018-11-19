@@ -42,6 +42,10 @@ class Body {
         .then(body => new Body(body.id, body.name, body.body_type))
     }
 
+    getBodyType() {
+        return db.one('select * from body_types where id=$1 returning name', [this.body_type])
+    }
+
 
     getFavUsers() {
         return db.any(`
