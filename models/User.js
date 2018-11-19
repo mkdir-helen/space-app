@@ -21,16 +21,16 @@ class User {
     // CREATE
     
 
-    static oAdd(name, google_ID, thumbnail) {
+    static oAdd(name, lat, long, username, password, google_ID, thumbnail) {
         return db.one(`
             insert into users 
-                (name, google_ID, thumbnail)
+                (name, lat, long, username, pwhash, google_ID, thumbnail)
             values
-                ($1, $2, $3)
+                ($1, $2, $3, $4, $5, $6, $7)
             returning id    
-            `, [name, google_ID, thumbnail])
+            `, [name, null, null, null, null, google_ID, thumbnail])
             .then(data => {
-                const u = new User(data.id, name, google_ID, thumbnail);
+                const u = new User(data.id, name, data.lat, data.long, data.username, data.google_ID, thumbnail);
                 return u;
             });
     }
@@ -109,7 +109,7 @@ static getUsersGI(gid) {
         // into array of User instances
         console.log(userObj);
         console.log('userObj in getUsers');
-            const u = new User(userObj.id, userObj.name, userObj.google_ID, userObj.thumbnail);
+            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.google_ID, userObj.thumbnail);
             return u;
     }).catch(
         () => {

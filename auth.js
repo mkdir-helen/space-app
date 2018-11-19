@@ -21,7 +21,7 @@ app.use(session({
 passport.serializeUser((user,done)=> {
     // console.log(user);
     // console.log('this is serializeUser');
-    done(null, user.id); 
+    done(null, user); 
 })
 
 passport.deserializeUser((id, done)=>{
@@ -45,6 +45,10 @@ passport.use(new GoogleStrategy({
             //if not, create user in our db
             User.oAdd(
                 profile.displayName,
+                null,
+                null,
+                null,
+                null,
                 profile.id,
                 profile._json.image.url
             ).then((newUser) => {
