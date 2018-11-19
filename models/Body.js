@@ -43,7 +43,7 @@ class Body {
     }
 
     getBodyType() {
-        return db.one('select * from body_types where id=$1 returning name', [this.body_type])
+        return db.one('select * from body_types where id=$1', [this.body_type])
     }
 
 
