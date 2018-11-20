@@ -17,6 +17,9 @@ app.use(session({
     secret: 'random1234',
     resave: true,
     saveUninitialized: true,
+    cookie: {
+        maxAge: 30*24*60*60*1000
+    }
 }));
 
 passport.serializeUser((user,done)=> {
