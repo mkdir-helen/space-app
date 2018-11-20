@@ -44,14 +44,14 @@ function updateEvents() {
     // .then(fetchClouds)
     // get weather forecast
     return Promise.all([
-        fetchClouds(),
+        // fetchClouds(),
         fetchSpace(),
         fetchDoomsday()
     ])
 }
 
 updateEvents() 
-
+Ô
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
     if (req.session.user || req.isAuthenticated()) {
@@ -76,8 +76,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    // res.send(mainPage())
-    res.redirect('/login')
+    res.send(mainPage())
+    // res.redirect('/login')
     // const thePage = page('hey there');
     // res.send(thePage);
 });
