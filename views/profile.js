@@ -61,7 +61,12 @@ function myFavsDiv(spaceObjects) {
     <div class="My-Favorites">
             <h4 class="myFavs"> My Favorites </h4>
             ${spaceObjectDivs} 
+            <form method="Post" action="/favorite">
+            Space Object Name <input type="text" name="username">
+            <input type="Submit" value="Submit">
+            </form>
     </div>
+
 `
 
 
