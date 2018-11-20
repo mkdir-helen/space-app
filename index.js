@@ -105,15 +105,20 @@ app.post('/favorite', ensureAuthenticated, (req, res)=>{
 })
 
 
-// app.get('/profile', ensureAuthenticated, (req, res) => {
-//     // console.log('This is the /new route');
-//     res.send(profilePage());
-// });
+app.post('/friend', ensureAuthenticated, (req, res)=>{
+    const username = req.body.username
+    User.getById(req.session.passport.user)
+    .then(theUser =>{
+        User.getByUsername(username)
+        .then(friend =>{
+            theUser.addFriend(friend )
+            .then(()=>{
+                res.redirect('/profile')
+            })
+        })
+    })
+})
 
-app.get('/favorites', ensureAuthenticated, (req, res) => {
-    // console.log('This is the /new route');
-    res.send('favorites');
-});
 
 
 
