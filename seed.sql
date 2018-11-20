@@ -15,6 +15,7 @@ insert into body_types
     (name)
 values
     ('star'),
+    ('planet'),
     ('comet'),
     ('asteroid'),
     ('satellite'),
@@ -68,10 +69,6 @@ values
     (4, 2),
     (3, 4),
     (4, 3);
-
-
-
-
 
 insert into favorites
     (body_id, user_id)
