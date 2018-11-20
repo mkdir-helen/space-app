@@ -167,7 +167,7 @@ app.get('/profile/:username([A-Z]+)', ensureAuthenticated, (req, res) => {
             const dayElements = []
             const monthElements = []
             const yearElements = []
-            let previousEvent
+            let previousEvent = new Event(99999999, 'random', new Date('1000-12-12'), 1, null)
             while (events.length > 0) {
                 const currentEvent = events.pop()
                 // if it's for the same day or the first event
