@@ -187,7 +187,15 @@ class User {
         `, [spaceBody.id, this.id])
     }
 
-
+    addFriend(friend) {
+        return db.any(`
+        insert into friends(user_id_a, friend_id) values($1,$2)
+        `, [friend.id, this.id])
+        .then(() => {
+        return db.any(`insert into friends(user_id_a, friend_id) values($1,$2)
+            `, [this.id, friend.id])
+        })
+    }
 
 
     updateLocation(lat, lon) {
