@@ -37,7 +37,7 @@ passport.deserializeUser((id, done)=>{
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google"
+    callbackURL: "http://ec2-18-222-251-247.us-east-2.compute.amazonaws.com/profile"
   },
   function(accessToken, refreshToken, profile, done) {
     User.getUsersGI(profile.id).then((currentUser) => {
