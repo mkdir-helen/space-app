@@ -1,4 +1,5 @@
 const db = require('./db');
+const Body = require('./Body')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -57,31 +58,31 @@ class User {
         select * from users order by id
     `).then(userArray => {
 
-        // transform array of objects
-        // into array of User instances
-        const instanceArray = userArray.map(userObj => {
-            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, null, null, null);
-            return u;
-        });
-        return instanceArray;
-    })
-}
-static getById(id) {
-    return db.one(`
+            // transform array of objects
+            // into array of User instances
+            const instanceArray = userArray.map(userObj => {
+                const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, null, null, null);
+                return u;
+            });
+            return instanceArray;
+        })
+    }
+    static getById(id) {
+        return db.one(`
         select * from users where id=$1
-    `,[id]).then(userObj => {
-        // transform array of objects
-        // into array of User instances
-        // console.log(userObj);
-        // console.log('userObj in getUsers');
+    `, [id]).then(userObj => {
+            // transform array of objects
+            // into array of User instances
+            // console.log(userObj);
+            // console.log('userObj in getUsers');
             const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.pwhash, userObj.google_ID, userObj.thumbnail);
             return u;
-    }).catch(
-        () => {
-            return false;
-        }
-    )
-}
+        }).catch(
+            () => {
+                return false;
+            }
+        )
+    }
 
 
     static getByUsername(username) {
@@ -110,15 +111,15 @@ static getById(id) {
 
 
 
-        
-static getUsersGI(google_ID) {
-    return db.one(`
+
+    static getUsersGI(google_ID) {
+        return db.one(`
         select * from users where google_ID=$1
-    `,[google_ID]).then(userObj => {
-        // transform array of objects
-        // into array of User instances
-        console.log(userObj);
-        console.log('userObj in getUsers');
+    `, [google_ID]).then(userObj => {
+            // transform array of objects
+            // into array of User instances
+            console.log(userObj);
+            console.log('userObj in getUsers');
             const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.pwhash, google_ID, userObj.thumbnail);
             return u;
         }).catch(
@@ -130,13 +131,21 @@ static getUsersGI(google_ID) {
 
     getFavBody() {
         return db.any(`
-        select * from favorites
-            where user_id = $1
-    `, [this.id]);
+        select *
+                from bodies
+                join
+                (select body_id
+                from users
+                join favorites
+                on user_id=id
+                where user_id=$1) uf
+                on body_id=id
+    `, [this.id])
+    .then(bodies => bodies.map( body => new Body(body.id,body.name,body.body_type)))
     }
 
     getFriends() {
-        return db.any( `
+        return db.any(`
         select *
         from users
         join
@@ -148,7 +157,7 @@ static getUsersGI(google_ID) {
         where users.name=$1) fID
         on fID.friend_id=id
         `, [this.name])
-        .then(friends => friends.map(friend => new User(friend.id, friend.name, friend.lat, friend.long, friend.username, friend.pwhash, friend.google_ID, friend.thumbnail)))
+            .then(friends => friends.map(friend => new User(friend.id, friend.name, friend.lat, friend.long, friend.username, friend.pwhash, friend.google_ID, friend.thumbnail)))
     }
 
 
@@ -175,10 +184,9 @@ static getUsersGI(google_ID) {
     addFavBody(spaceBody) {
         return db.any(`
         insert into favorites(body_id, user_id) values($1,$2)
-        `, [spaceBody.id, this.id]
-        )
+        `, [spaceBody.id, this.id])
     }
-    
+
 
 
 
