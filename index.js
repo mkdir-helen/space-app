@@ -43,9 +43,11 @@ function updateEvents() {
     // User.getLocation()
     // .then(fetchClouds)
     // get weather forecast
-    fetchClouds()
-    fetchSpace()
-    fetchDoomsday()
+    return Promise.all([
+        fetchClouds(),
+        fetchSpace(),
+        fetchDoomsday()
+    ])
 }
 
 updateEvents() 
@@ -112,13 +114,15 @@ app.post('/register', (req, res) => {
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     //2. call user.add
-    // console.log(newUsername);
-    // console.log(newPassword);
-    User.add('', null, null, newUsername, newPassword, '', '')
-        .then(newUser => {
+    // give users atlanta's coordinates by default
+    User.add(newUsername, 33, -84, newUsername, newPassword, '', '')
+    .then(newUser => {
+        updateEvents()
+        .then(() => {
             req.session.user = newUser;
-            res.redirect('/profile');
+            res.redirect(`/profile/${newUsername}`);
         })
+    })
 
 })
 
@@ -143,7 +147,7 @@ app.post('/login', (req, res) => {
             if (theUser.passwordDoesMatch(loginPassword)) {
                 req.session.user = theUser;
                 console.log('it worked or it exists');
-                res.redirect('/profile');
+                res.redirect(`/profile/${theUser.username}`);
             } else {
                 res.redirect('/login');
                 console.log('boohoo');
@@ -154,7 +158,7 @@ app.post('/login', (req, res) => {
 
 
 
-app.get('/profile/:username([A-Z]+)', (req, res) => {
+app.get('/profile/:username([A-Z]+)', ensureAuthenticated, (req, res) => {
     // user's main page
     // get all of user's events
     // and build page
@@ -167,7 +171,7 @@ app.get('/profile/:username([A-Z]+)', (req, res) => {
             const dayElements = []
             const monthElements = []
             const yearElements = []
-            let previousEvent
+            let previousEvent = new Event(99999999, 'random', new Date('1000-12-12'), 1, null)
             while (events.length > 0) {
                 const currentEvent = events.pop()
                 // if it's for the same day or the first event

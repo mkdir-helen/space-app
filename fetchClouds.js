@@ -6,6 +6,7 @@ function fetchClouds() {
   return User.getAll()
   .then(users => {
     return Promise.all(users.map(user => {
+      debugger
       return axios.get(`https://api.darksky.net/forecast/${process.env.WEATHER_KEY}/${user.lat},${user.long}?exclude=[currently, minutely, hourly]`)
       .then(parseResponse)
       .then(parseForecast)
