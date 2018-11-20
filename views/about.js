@@ -1,5 +1,5 @@
-function about(){
-   return `
+function about() {
+    return `
    <!DOCTYPE html>
    <html lang="en">
    
@@ -10,7 +10,6 @@ function about(){
        <link rel="stylesheet" href="../css/style.css">
        <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0"
            ; crossorigin="anonymous"></script>
-       <link rel="stylesheet" href="/space-app/front-end/css/about.css">
        <title>AboutUS</title>
    </head>
    
@@ -20,14 +19,14 @@ function about(){
    
                <!-- member-->
                <div class="team-member">
-                   <img class="team-photo" src="/space-app/front-end/img/image.png">
+                   <img class="team-photo" src="/img/image.png">
                    <h3>Issac Fonseca </h3>
                </div>
    
    
                <!-- member-->
                <div class="team-member">
-                   <img class="team-photo" src="/space-app/front-end/img/profile.png">
+                   <img class="team-photo" src="/img/profile.png">
                    <h3>Melon Hasegawa</h3>
    
                </div>
@@ -35,7 +34,7 @@ function about(){
    
                <!-- member-->
                <div class="team-member">
-                   <img class="team-photo" src="/space-app/front-end/img/fullsizeoutput_ec4.jpeg">
+                   <img class="team-photo" src="img/fullsizeoutput_ec4.jpeg">
                    <h3>Colin Argo</h3>
    
                </div>
