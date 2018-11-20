@@ -148,7 +148,7 @@ static getUsersGI(google_ID) {
         where users.name=$1) fID
         on fID.friend_id=id
         `, [this.name])
-        .then(friends => friends.map(friend => new User(friend.id,friend.name,friend.lat,friend.long,friend.username.friend.pwhash.friend.google_ID.friend.thumbnail)))
+        .then(friends => friends.map(friend => new User(friend.id, friend.name, friend.lat, friend.long, friend.username, friend.pwhash, friend.google_ID, friend.thumbnail)))
     }
 
 
