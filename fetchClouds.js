@@ -85,8 +85,14 @@ function addMoonSliver(day, user_id) {
   // and add any event days that are forecasted clear
   if (day.moonPhase < 0.2) {
     return Event.add('Low moonlight', day.time, 7, user_id)
-  } else {
-    return Event.add(`Moonphase: ${day.moonPhase}`, day.time, 7, user_id)
+  } else if (day.moonPhase > 0.23 && day.moonPhase < 0.27) {
+    return Event.add(`Moonphase: First quarter moon`, day.time, 7, user_id)
+  } else if (day.moonPhase > 0.48 && day.moonPhase < 0.52) {
+    return Event.add(`Moonphase: Half moon`, day.time, 7, user_id)
+  } else if (day.moonPhase > 0.73 && day.moonPhase < 0.77) {
+    return Event.add(`Moonphase: Three quarter moon`, day.time, 7, user_id)
+  } else if (day.moonPhase > 0.98) {
+    return Event.add(`Moonphase: Full moon`, day.time, 7, user_id)
   }
 }
 
