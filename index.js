@@ -43,9 +43,11 @@ function updateEvents() {
     // User.getLocation()
     // .then(fetchClouds)
     // get weather forecast
-    fetchClouds()
-    fetchSpace()
-    fetchDoomsday()
+    return Promise.all([
+        fetchClouds(),
+        fetchSpace(),
+        fetchDoomsday()
+    ])
 }
 
 updateEvents() 
@@ -112,12 +114,14 @@ app.post('/register', (req, res) => {
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     //2. call user.add
-    debugger
     // give users atlanta's coordinates by default
     User.add(newUsername, 33, -84, newUsername, newPassword, '', '')
     .then(newUser => {
-        req.session.user = newUser;
-        res.redirect(`/profile/${newUsername}`);
+        updateEvents()
+        .then(() => {
+            req.session.user = newUser;
+            res.redirect(`/profile/${newUsername}`);
+        })
     })
 
 })
