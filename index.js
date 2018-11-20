@@ -52,6 +52,7 @@ const pageElement = require('./views/page')
 
 // updateEvents() 
 
+
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
     console.log(req.session);
@@ -87,8 +88,21 @@ app.get('/about', (req,res)=>{
     res.send(aboutPage());
 });
 
-app.get('/events', (req,res)=>{
-    res.send(eventPage());
+app.get('/profile', (req,res)=>{
+    User.getById(req.session.user.id)
+    .then(theUser => {
+        theUser.getFriends()
+        .then(friends =>{
+            theUser.getFavBody()
+            .then(bodies =>{
+                res.send(profilePage.profile( 
+                    profilePage.myFavsDiv(bodies),profilePage.myFriendsDiv(friends),profilePage.myLocation
+                    ([theUser.lat, theUser.long])))
+            })
+        })
+    })
+    
+    // profilePage.myFavsDiv
 });
 
 // app.get('/profile', ensureAuthenticated, (req, res) => {
@@ -167,7 +181,7 @@ app.post('/login', (req, res) => {
 
 
 
-app.get('/profile', ensureAuthenticated, (req, res) => {
+app.get('/events', ensureAuthenticated, (req, res) => {
     // user's main page
     // get all of user's events
     // and build page

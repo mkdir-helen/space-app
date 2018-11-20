@@ -37,7 +37,9 @@ function topContainer() {
         <header class="showcase">
             <h1>Space App</h1>
         </header>
-        </section>
+
+    </section>
+
     `
 }
 

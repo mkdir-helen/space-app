@@ -4,7 +4,7 @@ const saltRounds = 10;
 
 class User {
 
-    constructor(id, name, lat, long, username, pwhash, google_ID, thumbnail ) {
+    constructor(id, name, lat, long, username, pwhash, google_ID, thumbnail) {
         // define properties that
         // are also the names
         // of the database columns
@@ -19,7 +19,7 @@ class User {
     }
 
     // CREATE
-    
+
 
     static oAdd(name, lat, long, username, password, google_ID, thumbnail) {
         return db.one(`
@@ -34,28 +34,29 @@ class User {
                 return u;
             });
     }
- 
- static add(name, lat, long, username, password, google_ID, thumbnail) {
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(password, salt);
-    return db.one(`
+
+    static add(name, lat, long, username, password, google_ID, thumbnail) {
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hash = bcrypt.hashSync(password, salt);
+        return db.one(`
         insert into users 
             (name, lat, long, username, pwhash, google_ID, thumbnail)
         values
             ($1, $2, $3, $4, $5, $6, $7)
         returning id`, [name, lat, long, username, hash, null, null])
-        .then(data => {
-            console.log(data);
-            const u = new User(data.id, data.name, data.lat, data.long, username, data.google_ID, data.thumbnail);
-            return u;
-        });
+            .then(data => {
+                console.log(data);
+                const u = new User(data.id, data.name, data.lat, data.long, username, data.google_ID, data.thumbnail);
+                return u;
+            });
 
-}
-// RETRIEVE
-static getAll() {
-    return db.any(`
+    }
+    // RETRIEVE
+    static getAll() {
+        return db.any(`
         select * from users order by id
     `).then(userArray => {
+
         // transform array of objects
         // into array of User instances
         const instanceArray = userArray.map(userObj => {
@@ -82,28 +83,31 @@ static getById(id) {
     )
 }
 
-static getByUsername(username) {
-    return db.one(`
+
+    static getByUsername(username) {
+        return db.one(`
         select * from users
         where username ilike '%$1:raw%'          
-    `, [username]).then(data => { console.log(data);
-        return new User(data.id, data.name, data.lat, data.long, username, data.pwhash, data.google_ID, data.thumbnail);
-    })
-}
+    `, [username]).then(data => {
+            console.log(data);
+            return new User(data.id, data.name, data.lat, data.long, username, data.pwhash, data.google_ID, data.thumbnail);
+        })
+    }
 
-static searchByName(name) {
-    return db.any(`
+    static searchByName(name) {
+        return db.any(`
         select * from users
             where name ilike '%$1:raw%'
     `, [name])
-}
+    }
 
-static searchByLocation(location) {
-    return db.any(`
+    static searchByLocation(location) {
+        return db.any(`
         select * from users
-            where location ilike '%1:raw%'`
-            ,[location])
-}
+            where location ilike '%1:raw%'`, [location])
+    }
+
+
 
 
         
@@ -117,65 +121,80 @@ static getUsersGI(google_ID) {
         console.log('userObj in getUsers');
             const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.pwhash, google_ID, userObj.thumbnail);
             return u;
-    }).catch(
-        () => {
-            return false;
-        }
-    )
-}
+        }).catch(
+            () => {
+                return false;
+            }
+        )
+    }
 
-getFavBody() {
-    return db.any(`
+    getFavBody() {
+        return db.any(`
         select * from favorites
             where user_id = $1
     `, [this.id]);
-}
+    }
+
+    getFriends() {
+        return db.any( `
+        select *
+        from users
+        join
+        (select friends.friend_id
+        from friends
+        join
+        users
+        on user_id_a=id
+        where users.name=$1) fID
+        on fID.friend_id=id
+        `, [this.name])
+        .then(friends => friends.map(friend => new User(friend.id,friend.name,friend.lat,friend.long,friend.username.friend.pwhash.friend.google_ID.friend.thumbnail)))
+    }
 
 
+    passwordDoesMatch(thePassword) {
+        const didMatch = bcrypt.compareSync(thePassword, this.pwhash);
+        return didMatch;
+    }
 
-passwordDoesMatch(thePassword){
-    const didMatch = bcrypt.compareSync(thePassword, this.pwhash);
-    return didMatch;
-}
 
-
- // UPDATE
- updateName(name) {
-    this.name = name;
-    return db.result(`
+    // UPDATE
+    updateName(name) {
+        this.name = name;
+        return db.result(`
         update users
             set name=$2
         where id=$1
     `, [this.id, name])
-    .then(result => {
-        return result.rowCount === 1;
+            .then(result => {
+                return result.rowCount === 1;
 
-    })
-}   
+            })
+    }
 
 
-updateLocation(lat, lon) {
-    this.lat = lat
-    this.lon = lon
-    return db.result(`
+    updateLocation(lat, lon) {
+        this.lat = lat
+        this.lon = lon
+        return db.result(`
         update users 
             set lat=$2, lon=$3
         where id=$1`,
-        [this.id, lat, lon])
-        .then(result => {
-            return result.rowCount === 1;
-        })
-}
-// DELETE
-delete(){
-    return db.result(`
+                [this.id, lat, lon])
+            .then(result => {
+                return result.rowCount === 1;
+            })
+    }
+    // DELETE
+    delete() {
+        return db.result(`
     delete from users
     where id = $1
-    `, [this.id]);        
-}
+    `, [this.id]);
+    }
 
-static deleteById(id) {
-    return db.result(`
+    static deleteById(id) {
+        return db.result(`
     delete from users
     where id = $1
     `, [id]);
