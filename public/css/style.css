@@ -160,15 +160,9 @@ body {
 
 }
 
-.searchControl{
-    color: rgb(218, 183, 28);
-    font-display: f
-}
-
 .footer{
     color: #fff;
 }
-
 @media screen and (max-width: 768px) {
 
     .main-nav ul {
@@ -176,7 +170,7 @@ body {
         grid-gap: 5px;
         padding: 0;
         list-style: none;
-        grid-template-columns: repeat(4, 1fr)
+        grid-template-columns: repeat(3, 1fr)
     }
 
     
@@ -207,26 +201,26 @@ body {
         color: #ddd;
     }
 
-    .zipcode-container{
-        width: 25%;
-        display: flex;
-        align-items: center;
-        align-content: flex-end;
-        justify-content: flex-start;
-
-    }
     .Day {
 
         background: #fff;
         text-align: center;
         padding: 1rem 1rem;
         margin: 1.0%;
-        border-radius: 13px
+        border-radius: 13px;
+        min-width: 400px;
     }
     
     .week{
         display: flex;
         flex-direction: column;
+    }
+
+    .events {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-width: 50px;
     }
 
     }
@@ -240,7 +234,7 @@ body {
             grid-gap: 5px;
             padding: 0;
             list-style: none;
-            grid-template-columns: repeat(4, 1fr)
+            grid-template-columns: repeat(3, 1fr)
         }
     
         
@@ -285,14 +279,24 @@ body {
             text-align: center;
             padding: 1rem 1rem;
             margin: 1.0%;
-            border-radius: 13px
+            border-radius: 13px;
         }
         
         .week{
             display: flex;
             flex-direction: column;
         }
+        .events {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-width: 400px;
+        }
     
+        .Day li{
+            font-size: 12px;
+            text-decoration: none;
+        }
         }
 
 
@@ -303,7 +307,7 @@ body {
                 grid-gap: 5px;
                 padding: 0;
                 list-style: none;
-                grid-template-columns: repeat(4, 1fr)
+                grid-template-columns: repeat(3, 1fr)
             }
         
             
@@ -329,22 +333,18 @@ body {
             
         
             .showcase h1 {
-                font-size: 3.2rem;
+                font-size: 2.2rem;
                 margin-bottom: 0;
                 color: #ddd;
             }
         
-            .zipcode-container{
-                display: flex;
-                align-items: center;
-            }
+
             .Day {
-        
                 background: #fff;
                 text-align: center;
                 padding: 1rem 1rem;
                 margin: 1.0%;
-                border-radius: 13px
+            
             }
             
             .week{
@@ -355,5 +355,14 @@ body {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+            }
+            .events {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                min-width: 200px;
+            }
+            .sticky h1 {
+                font-size: 2px
             }
             }
