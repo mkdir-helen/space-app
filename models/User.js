@@ -172,6 +172,15 @@ static getUsersGI(google_ID) {
             })
     }
 
+    addFavBody(spaceBody) {
+        return db.any(`
+        insert into favorites(body_id, user_id) values($1,$2)
+        `, [spaceBody.id, this.id]
+        )
+    }
+    
+
+
 
     updateLocation(lat, lon) {
         this.lat = lat
