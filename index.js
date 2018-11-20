@@ -33,7 +33,7 @@ const pageElement = require('./views/page')
 
 
 
-updateEvents(); 
+// updateEvents(); 
 
 
 //making sure users are logged in to do anything
