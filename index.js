@@ -88,6 +88,23 @@ app.get('/profile', ensureAuthenticated, (req,res)=>{
     // profilePage.myFavsDiv
 });
 
+
+
+app.post('/favorite', ensureAuthenticated, (req, res)=>{
+    const bodyname = req.body.bodyname
+    User.getById(req.session.passport.user)
+    .then(theUser =>{
+        Body.getByName(bodyname)
+        .then(spaceBody =>{
+            theUser.addFavBody(spaceBody )
+            .then(()=>{
+                res.redirect('/profile')
+            })
+        })
+    })
+})
+
+
 // app.get('/profile', ensureAuthenticated, (req, res) => {
 //     // console.log('This is the /new route');
 //     res.send(profilePage());
