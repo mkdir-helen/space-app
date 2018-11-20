@@ -18,10 +18,7 @@ const profilePage = require('./views/profile');
 const eventPage = require('./views/eventpage');
 const aboutPage = require('./views/about');
 
-const schedule = require('node-schedule')
-const fetchClouds = require('./fetchClouds')
-const fetchSpace = require('./fetchSpace')
-const fetchDoomsday = require('./fetchDoomsday')
+const updateEvents = require('./updateEvents');
 
 const eventElement = require('./views/event')
 const dayElement = require('./views/day')
@@ -34,23 +31,9 @@ const contentElement = require('./views/content')
 const bodyElement = require('./views/body')
 const pageElement = require('./views/page')
 
-// // create job scheduled to run at midnight every day
-// const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) 
 
-// // will use user location
-// // currently using coordinates for los angeles
-// function updateEvents() {
-//     // User.getLocation()
-//     // .then(fetchClouds)
-//     // get weather forecast
-//     return Promise.all([
-//         fetchClouds(),
-//         fetchSpace(),
-//         fetchDoomsday()
-//     ])
-// }
 
-// updateEvents() 
+updateEvents(); 
 
 
 //making sure users are logged in to do anything
@@ -135,7 +118,7 @@ app.post('/register', (req, res) => {
         updateEvents()
         .then(() => {
             req.session.passport = {
-                user: theUser.id
+                user: newUser.id
             };
             req.session.save(()=>{
                 res.redirect(`/profile`);
@@ -162,6 +145,7 @@ app.post('/login', (req, res) => {
         })
         .then(theUser => {
             console.log(theUser);
+            console.log('this is supposedly theUser');
             // const didMatch = bcrypt.compareSync(loginPassword, theUser.pwhash);
             if (theUser.passwordDoesMatch(loginPassword)) {
                 req.session.passport = {

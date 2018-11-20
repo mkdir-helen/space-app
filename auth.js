@@ -5,6 +5,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 const User = require('./models/User');
+const updateEvents = require('./updateEvents');
 
 // app.use(cookieSession({
 //     maxAge:24*60*60*1000,
@@ -52,6 +53,7 @@ passport.use(new GoogleStrategy({
                 profile.id,
                 profile._json.image.url
             ).then((newUser) => {
+                updateEvents();
                 // console.log(newUser);
                 // console.log('this is the newUser');
                 done(null, 
