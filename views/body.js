@@ -15,7 +15,7 @@ function mainNav() {
             <nav class="main-nav">
                 <ul>
                     <li>
-                        <a href="/">My Space <i class="fas fa-globe"></i></a>
+                        <a href="/profile">My Space <i class="fas fa-globe"></i></a>
     
                     </li>
                     <li>
