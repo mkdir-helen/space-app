@@ -76,7 +76,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send(mainPage());
+    // res.send(mainPage())
+    res.redirect('/login')
     // const thePage = page('hey there');
     // res.send(thePage);
 });
