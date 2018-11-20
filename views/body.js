@@ -19,7 +19,7 @@ function mainNav() {
     
                     </li>
                     <li>
-                        <a href="#">Login <i class="fas fa-sign-in-alt"></i></a>
+                        <a href="#">Log-Out <i class="fas fa-sign-in-alt"></i></a>
                     </li>
                     <li>
                         <a href="#">SignUp <i class="fas fa-user-plus"></i></a>

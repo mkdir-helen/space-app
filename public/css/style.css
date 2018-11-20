@@ -89,6 +89,9 @@ body {
     margin: 3px;
 }
 
+.Week-Title {
+    height: 2em;
+}
 
 
 /* Showcase */
@@ -134,7 +137,9 @@ body {
     text-align: center;
     padding: 1.5rem 2rem;
     margin: 1.6%;
-    border-radius: 12px
+    border-radius: 12px;
+    width: 30%;
+
 }
 
 .events {
@@ -145,6 +150,9 @@ body {
 
 .week{
     display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+
 }
 
 .Week-Title{
