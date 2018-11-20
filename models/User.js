@@ -28,9 +28,9 @@ class User {
             values
                 ($1, $2, $3, $4, $5, $6, $7)
             returning id    
-            `, [name, null, null, null, null, google_ID, thumbnail])
+            `, [name, lat, long, null, null, google_ID, thumbnail])
             .then(data => {
-                const u = new User(data.id, name, data.lat, data.long, data.username, data.google_ID, thumbnail);
+                const u = new User(data.id, name, lat, long, data.username, data.pwhash, google_ID, thumbnail);
                 return u;
             });
     }
@@ -56,25 +56,33 @@ class User {
         return db.any(`
         select * from users order by id
     `).then(userArray => {
-            // transform array of objects
-            // into array of User instances
-            const instanceArray = userArray.map(userObj => {
-                const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, null, null, null);
-                return u;
-            });
-            return instanceArray;
-        })
-    }
-    static getById(id) {
-        return db.one('select * from users where id = $1', [id])
-            .then(result => {
-                const u = new User(result.id, result.name);
-                return u;
-            })
-        // .catch(err => {
-        //     return err;
-        // })
-    }
+
+        // transform array of objects
+        // into array of User instances
+        const instanceArray = userArray.map(userObj => {
+            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, null, null, null);
+            return u;
+        });
+        return instanceArray;
+    })
+}
+static getById(id) {
+    return db.one(`
+        select * from users where id=$1
+    `,[id]).then(userObj => {
+        // transform array of objects
+        // into array of User instances
+        // console.log(userObj);
+        // console.log('userObj in getUsers');
+            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.pwhash, userObj.google_ID, userObj.thumbnail);
+            return u;
+    }).catch(
+        () => {
+            return false;
+        }
+    )
+}
+
 
     static getByUsername(username) {
         return db.one(`
@@ -101,15 +109,17 @@ class User {
 
 
 
-    static getUsersGI(gid) {
-        return db.one(`
+
+        
+static getUsersGI(google_ID) {
+    return db.one(`
         select * from users where google_ID=$1
-    `, [gid]).then(userObj => {
-            // transform array of objects
-            // into array of User instances
-            console.log(userObj);
-            console.log('userObj in getUsers');
-            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.google_ID, userObj.thumbnail);
+    `,[google_ID]).then(userObj => {
+        // transform array of objects
+        // into array of User instances
+        console.log(userObj);
+        console.log('userObj in getUsers');
+            const u = new User(userObj.id, userObj.name, userObj.lat, userObj.long, userObj.username, userObj.pwhash, google_ID, userObj.thumbnail);
             return u;
         }).catch(
             () => {
@@ -138,7 +148,7 @@ class User {
         where users.name=$1) fID
         on fID.friend_id=id
         `, [this.name])
-        .then(friends => friends.map(friend => new User(friend.id,friend.name,friend.lat,friend.long,friend.username.friend.pwhash.friend.google_ID.friend.thumbnail)))
+        .then(friends => friends.map(friend => new User(friend.id, friend.name, friend.lat, friend.long, friend.username, friend.pwhash, friend.google_ID, friend.thumbnail)))
     }
 
 

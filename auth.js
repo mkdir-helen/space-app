@@ -5,6 +5,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 const User = require('./models/User');
+const updateEvents = require('./updateEvents');
 
 // app.use(cookieSession({
 //     maxAge:24*60*60*1000,
@@ -19,13 +20,13 @@ app.use(session({
 }));
 
 passport.serializeUser((user,done)=> {
-    // console.log(user);
+    console.log(user);
     // console.log('this is serializeUser');
     done(null, user); 
 })
 
 passport.deserializeUser((id, done)=>{
-    User.getUsersGI(id).then((user)=> {
+    User.getById(id).then((user)=> {
         done(null, user);
     })
 })  
@@ -45,18 +46,19 @@ passport.use(new GoogleStrategy({
             //if not, create user in our db
             User.oAdd(
                 profile.displayName,
-                null,
-                null,
+                33,
+                -84,
                 null,
                 null,
                 profile.id,
                 profile._json.image.url
             ).then((newUser) => {
+                updateEvents();
                 // console.log(newUser);
                 // console.log('this is the newUser');
-                done(null, {
-                    id: newUser.google_ID
-                });
+                done(null, 
+                newUser.id
+                );
             });
         }
     })
@@ -84,7 +86,7 @@ app.get('/google/login', passport.authenticate('google', {
 app.get('/logout', (req,res)=> {
     req.logout();
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/login');
 })
 
 
