@@ -89,7 +89,7 @@ app.get('/about', (req,res)=>{
 });
 
 app.get('/profile', (req,res)=>{
-    User.getById(req.session.user.id)
+    User.getById(req.session.passport.user)
     .then(theUser => {
         theUser.getFriends()
         .then(friends =>{
