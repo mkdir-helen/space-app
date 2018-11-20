@@ -85,6 +85,10 @@ function myFriendsDiv(Friends) {
     <div class="My-Friends">
             <h4 class="myFriends"> My Friends </h4>
             ${myFriendsDiv} 
+            <form method="Post" action="/friend">
+            Friend Name <input type="text" name="username">
+            <input type="Submit" value="Submit">
+            </form>
     </div>
 `
 }
