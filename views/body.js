@@ -39,10 +39,6 @@ function topContainer() {
         <header class="showcase">
             <h1>Space App</h1>
         </header>
-        <div class="zipcode-container">
-            <input class="searchControl" type="text" placeholder="City Name or ZipCode" id="searchInput">
-            <button class="searchControl" id="searchBtn">Search</button>
-        </div>
     </section>
     `
 }
