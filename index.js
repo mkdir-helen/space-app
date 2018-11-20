@@ -51,7 +51,7 @@ function updateEvents() {
 }
 
 updateEvents() 
-Ô
+
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
     if (req.session.user || req.isAuthenticated()) {

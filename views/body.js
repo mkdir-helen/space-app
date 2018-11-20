@@ -21,9 +21,7 @@ function mainNav() {
                     <li>
                         <a href="#">Log-Out <i class="fas fa-sign-in-alt"></i></a>
                     </li>
-                    <li>
-                        <a href="#">SignUp <i class="fas fa-user-plus"></i></a>
-                    </li>
+                    
                     <li>
                         <a href="#">About <i class="fas fa-info"></i></a>
                     </li>
@@ -39,11 +37,7 @@ function topContainer() {
         <header class="showcase">
             <h1>Space App</h1>
         </header>
-        <div class="zipcode-container">
-            <input class="searchControl" type="text" placeholder="City Name or ZipCode" id="searchInput">
-            <button class="searchControl" id="searchBtn">Search</button>
-        </div>
-    </section>
+        </section>
     `
 }
 
