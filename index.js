@@ -54,7 +54,6 @@ updateEvents()
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
-
     if (req.session.user || req.isAuthenticated()) {
         // req.user is available for use here
         console.log('we are all good');
@@ -77,7 +76,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send(mainPage());
+    // res.send(mainPage())
+    res.redirect('/login')
     // const thePage = page('hey there');
     // res.send(thePage);
 });
@@ -117,7 +117,7 @@ app.post('/register', (req, res) => {
     // give users atlanta's coordinates by default
     User.add(newUsername, 33, -84, newUsername, newPassword, '', '')
     .then(newUser => {
-        updateEvents()
+        // updateEvents()
         .then(() => {
             req.session.user = newUser;
             res.redirect(`/profile/${newUsername}`);
