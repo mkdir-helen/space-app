@@ -15,15 +15,15 @@ function mainNav() {
             <nav class="main-nav">
                 <ul>
                     <li>
-                        <a href="#">My Space <i class="fas fa-globe"></i></a>
+                        <a href="/">My Space <i class="fas fa-globe"></i></a>
     
                     </li>
                     <li>
-                        <a href="#">Log-Out <i class="fas fa-sign-in-alt"></i></a>
+                        <a href="/logout">Log-Out <i class="fas fa-sign-in-alt"></i></a>
                     </li>
                     
                     <li>
-                        <a href="#">About <i class="fas fa-info"></i></a>
+                        <a href="/about">About <i class="fas fa-info"></i></a>
                     </li>
                 </ul>
             </nav>
