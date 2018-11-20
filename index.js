@@ -44,7 +44,7 @@ function updateEvents() {
     // .then(fetchClouds)
     // get weather forecast
     return Promise.all([
-        // fetchClouds()
+        fetchClouds(),
         fetchSpace(),
         fetchDoomsday()
     ])
