@@ -88,7 +88,7 @@ app.get('/about', (req,res)=>{
     res.send(aboutPage());
 });
 
-app.get('/profile', (req,res)=>{
+app.get('/profile', ensureAuthenticated, (req,res)=>{
     User.getById(req.session.passport.user)
     .then(theUser => {
         theUser.getFriends()
