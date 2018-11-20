@@ -44,7 +44,7 @@ function updateEvents() {
     // .then(fetchClouds)
     // get weather forecast
     return Promise.all([
-        fetchClouds(),
+        // fetchClouds()
         fetchSpace(),
         fetchDoomsday()
     ])
@@ -90,10 +90,10 @@ app.get('/events', (req,res)=>{
     res.send(eventPage());
 });
 
-app.get('/profile', ensureAuthenticated, (req, res) => {
-    // console.log('This is the /new route');
-    res.send(profilePage());
-});
+// app.get('/profile', ensureAuthenticated, (req, res) => {
+//     // console.log('This is the /new route');
+//     res.send(profilePage());
+// });
 
 app.get('/favorites', ensureAuthenticated, (req, res) => {
     // console.log('This is the /new route');
@@ -117,10 +117,10 @@ app.post('/register', (req, res) => {
     // give users atlanta's coordinates by default
     User.add(newUsername, 33, -84, newUsername, newPassword, '', '')
     .then(newUser => {
-        // updateEvents()
+        updateEvents()
         .then(() => {
             req.session.user = newUser;
-            res.redirect(`/profile/${newUsername}`);
+            res.redirect(`/profile`);
         })
     })
 
@@ -147,7 +147,7 @@ app.post('/login', (req, res) => {
             if (theUser.passwordDoesMatch(loginPassword)) {
                 req.session.user = theUser;
                 console.log('it worked or it exists');
-                res.redirect(`/profile/${theUser.username}`);
+                res.redirect(`/profile`);
             } else {
                 res.redirect('/login');
                 console.log('boohoo');
@@ -158,11 +158,11 @@ app.post('/login', (req, res) => {
 
 
 
-app.get('/profile/:username([A-Z]+)', ensureAuthenticated, (req, res) => {
+app.get('/profile', ensureAuthenticated, (req, res) => {
     // user's main page
     // get all of user's events
     // and build page
-    User.getByUsername(req.params.username)
+    User.getByUsername(req.session.user.username)
     .then(user => {
         Event.getByUser(user.id)
         .then(events => {
