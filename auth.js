@@ -19,13 +19,13 @@ app.use(session({
 }));
 
 passport.serializeUser((user,done)=> {
-    // console.log(user);
+    console.log(user);
     // console.log('this is serializeUser');
     done(null, user); 
 })
 
 passport.deserializeUser((id, done)=>{
-    User.getUsersGI(id).then((user)=> {
+    User.getById(id).then((user)=> {
         done(null, user);
     })
 })  
@@ -45,8 +45,8 @@ passport.use(new GoogleStrategy({
             //if not, create user in our db
             User.oAdd(
                 profile.displayName,
-                null,
-                null,
+                33,
+                -84,
                 null,
                 null,
                 profile.id,
@@ -54,9 +54,9 @@ passport.use(new GoogleStrategy({
             ).then((newUser) => {
                 // console.log(newUser);
                 // console.log('this is the newUser');
-                done(null, {
-                    id: newUser.google_ID
-                });
+                done(null, 
+                newUser.id
+                );
             });
         }
     })
@@ -84,7 +84,7 @@ app.get('/google/login', passport.authenticate('google', {
 app.get('/logout', (req,res)=> {
     req.logout();
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/login');
 })
 
 

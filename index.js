@@ -34,27 +34,29 @@ const contentElement = require('./views/content')
 const bodyElement = require('./views/body')
 const pageElement = require('./views/page')
 
-// create job scheduled to run at midnight every day
-const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) 
+// // create job scheduled to run at midnight every day
+// const j = schedule.scheduleJob('* 0 0 * * *', updateEvents) 
 
-// will use user location
-// currently using coordinates for los angeles
-function updateEvents() {
-    // User.getLocation()
-    // .then(fetchClouds)
-    // get weather forecast
-    return Promise.all([
-        // fetchClouds()
-        fetchSpace(),
-        fetchDoomsday()
-    ])
-}
+// // will use user location
+// // currently using coordinates for los angeles
+// function updateEvents() {
+//     // User.getLocation()
+//     // .then(fetchClouds)
+//     // get weather forecast
+//     return Promise.all([
+//         fetchClouds(),
+//         fetchSpace(),
+//         fetchDoomsday()
+//     ])
+// }
 
-updateEvents() 
+// updateEvents() 
+
 
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
-    if (req.session.user || req.isAuthenticated()) {
+    console.log(req.session);
+    if (req.session.passport || req.isAuthenticated()) {
         // req.user is available for use here
         console.log('we are all good');
         return next();
@@ -76,8 +78,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send(mainPage())
-    // res.redirect('/login')
+    // res.send(mainPage())
+    res.redirect('/login')
     // const thePage = page('hey there');
     // res.send(thePage);
 });
@@ -132,8 +134,12 @@ app.post('/register', (req, res) => {
     .then(newUser => {
         updateEvents()
         .then(() => {
-            req.session.user = newUser;
-            res.redirect(`/profile`);
+            req.session.passport = {
+                user: theUser.id
+            };
+            req.session.save(()=>{
+                res.redirect(`/profile`);
+            })
         })
     })
 
@@ -158,9 +164,13 @@ app.post('/login', (req, res) => {
             console.log(theUser);
             // const didMatch = bcrypt.compareSync(loginPassword, theUser.pwhash);
             if (theUser.passwordDoesMatch(loginPassword)) {
-                req.session.user = theUser;
+                req.session.passport = {
+                    user: theUser.id
+                };
                 console.log('it worked or it exists');
-                res.redirect(`/profile`);
+                req.session.save(()=>{
+                    res.redirect(`/profile`);
+                })
             } else {
                 res.redirect('/login');
                 console.log('boohoo');
@@ -175,7 +185,7 @@ app.get('/events', ensureAuthenticated, (req, res) => {
     // user's main page
     // get all of user's events
     // and build page
-    User.getByUsername(req.session.user.username)
+    User.getById(req.session.passport.user)
     .then(user => {
         Event.getByUser(user.id)
         .then(events => {
