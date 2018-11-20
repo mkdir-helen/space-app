@@ -117,7 +117,7 @@ app.post('/register', (req, res) => {
     // give users atlanta's coordinates by default
     User.add(newUsername, 33, -84, newUsername, newPassword, '', '')
     .then(newUser => {
-        updateEvents()
+        // updateEvents()
         .then(() => {
             req.session.user = newUser;
             res.redirect(`/profile/${newUsername}`);
