@@ -29,9 +29,7 @@ function about() {
            <li>
                <a href="#">Login <i class="fas fa-sign-in-alt"></i></a>
            </li>
-           <li>
-               <a href="#">SignUp <i class="fas fa-user-plus"></i></a>
-           </li>
+        
        </ul>
    </nav>
            <section class="cf team-container">
