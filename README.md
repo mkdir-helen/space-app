@@ -22,6 +22,12 @@ Using just a user's location as coordinates, we request information from the Dar
 * uses cron-like interface to schedule tasks
 
 ##### Passport
+* used OAuth 2.0 to authorize users to login with Google+
+* also created a normal login/register option
+* challenges: 
+..1. Using OAuth with PostgreSQL (and not MongoDB). The arguments and parameters were needed to be the same length as in the schema and in the models. Empty arguments we entered null or ''.
+..2. Having both normal login and google login to work. Fixed by taking from both user ids and authenticating them.  
+
 
 ##### Express, pg-promise, connect-pg-simple, bodyparser, bcrypt, dotenv
 
@@ -42,3 +48,4 @@ position sticky
 
 [Collin Argo](https://github.com/scollina)
 [Will Harris](https://github.com/harriswill22)
+[Helen Hasegawa](https://github.com/mkdir-helen)
