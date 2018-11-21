@@ -5,7 +5,7 @@ Using just a user's location, we request space and weather data from various API
 
 ### Demo
 * Sign Up
-![alt text](/readme-images/demo-sign-up.png?raw=true)
+![alt text](./readme-images/demo-sign-up.png?raw=true)
 
 * Login
 
