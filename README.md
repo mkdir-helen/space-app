@@ -16,14 +16,10 @@ Using just a user's location, we request space and weather data from various API
     <img src='readme-images/login-phone.png'>
 </p>
 
+* View Your Profile
 * Add Friends and Space Objects
 <p>
     <img src='readme-images/demo-add-friends.png'>
-</p>
-
-* View Your Profile
-<p>
-    <img src='readme-images/demo-profile.png'>
 </p>
 
 * View Space Events
