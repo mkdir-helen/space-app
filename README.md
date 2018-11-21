@@ -54,10 +54,7 @@ Using just a user's location, we request space and weather data from various API
 
 ##### Passport
 * used OAuth 2.0 to authorize users to login with Google+
-* also created a normal login/register option
-* challenges: 
-..1. Using OAuth with PostgreSQL (and not MongoDB). The arguments and parameters were needed to be the same length as in the schema and in the models. Empty arguments we entered null or ''.
-..2. Having both normal login and google login to work. Fixed by taking from both user ids and authenticating them.  
+* also created a normal login/register option 
 
 
 ##### Express, pg-promise, connect-pg-simple, bodyparser, bcrypt, dotenv
@@ -72,7 +69,9 @@ Using just a user's location, we request space and weather data from various API
 
 ### Challenges
 * calculating visibility of space objects
-* 
+* Using OAuth with PostgreSQL (and not MongoDB). The arguments and parameters were needed to be the same length as in the schema and in the models. Empty arguments we entered null or ''.
+* Having both normal login and google login to work. Fixed by taking from both user ids and authenticating them. 
+
 
 ### Future Plans
 * Come up with better name
