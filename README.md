@@ -42,7 +42,9 @@ Using just a user's location, we request space and weather data from various API
 ..2. Having both normal login and google login to work. Fixed by taking from both user ids and authenticating them.  
 
 
-##### Express, pg-promise, connect-pg-simple, bodyparser, bcrypt, dotenv
+##### Express, express-session, pg-promise, connect-pg-simple, bodyparser, bcrypt, dotenv
+* Used connect-pg-simple to connect to PostgreSQL and express-session to start a user session when they login.
+
 
 ### Styling
 * created the html and css in front-end folder
@@ -64,6 +66,8 @@ Using just a user's location, we request space and weather data from various API
 * Add more space data
 
 
-[Collin Argo](https://github.com/scollina)
-[Will Harris](https://github.com/harriswill22)
-[Helen Hasegawa](https://github.com/mkdir-helen)
+### Team Members
+Collin Argo [https://github.com/scollina](https://github.com/scollina)<br>
+Will Harris [https://github.com/harriswill22](https://github.com/harriswill22)<br>
+Helen Hasegawa [https://github.com/mkdir-helen](https://github.com/mkdir-helen)<br>
+Isaac Fonseca [https://github.com/isaacfo](https://github.com/isaacfo)<br>
