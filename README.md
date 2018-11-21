@@ -1,14 +1,32 @@
-#Space App
+# Space App
 ### Idea Origin
 We love space, and one of our favorite things to do is go outside at night and look at the stars and wonder what is out there. So we designed an app to tell us what is out there and when we can see it.
 Using just a user's location, we request space and weather data from various APIs to create and display events for the user.
 
 ### Demo
 * Sign Up
+<!-- ![alt text](../../readme-images/demo-sign-up.png?raw=true) -->
+<p>
+    <img src='readme-images/demo-sign-up.png'>
+</p>
+
 * Login
-* Add Friends
-* Add Space Objects
+<p>
+    <img src='readme-images/demo-login.png'>
+    <img src='readme-images/login-phone.png'>
+</p>
+
+* View Your Profile
+* Add Friends and Space Objects
+<p>
+    <img src='readme-images/demo-add-friends.png'>
+</p>
+
 * View Space Events
+<p>
+    <img src='readme-images/demo-events.png'>
+    <img src='readme-images/demo-events-phone.png'>
+</p>
 
 
 ### Backend
@@ -36,10 +54,7 @@ Using just a user's location, we request space and weather data from various API
 
 ##### Passport
 * used OAuth 2.0 to authorize users to login with Google+
-* also created a normal login/register option
-* challenges: 
-..1. Using OAuth with PostgreSQL (and not MongoDB). The arguments and parameters were needed to be the same length as in the schema and in the models. Empty arguments we entered null or ''.
-..2. Having both normal login and google login to work. Fixed by taking from both user ids and authenticating them.  
+* also created a normal login/register option 
 
 
 ##### Express, express-session, pg-promise, connect-pg-simple, bodyparser, bcrypt, dotenv
@@ -56,7 +71,9 @@ Using just a user's location, we request space and weather data from various API
 
 ### Challenges
 * calculating visibility of space objects
-* 
+* Using OAuth with PostgreSQL (and not MongoDB). The arguments and parameters were needed to be the same length as in the schema and in the models. Empty arguments we entered null or ''.
+* Having both normal login and google login to work. Fixed by taking from both user ids and authenticating them. 
+
 
 ### Future Plans
 * Come up with better name
