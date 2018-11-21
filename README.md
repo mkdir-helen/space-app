@@ -1,0 +1,3 @@
+[Will Harris](https://github.com/harriswill22)
+
+- <p>My contributions included, Working on the Front-End of the SpaceApp Project. I created the html and css for all of the WebPages(Events,UserProfile,About,login,register,).I used the NASA APOD archive for the webpage backgrounds and helped with building the users profile page with back-end development. Some of my challenges included using flex box and making sure i had the correct divs for all of the different sections.</p>
