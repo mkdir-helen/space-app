@@ -1,11 +1,11 @@
-#Space App
+# Space App
 ### Idea Origin
 We love space, and one of our favorite things to do is go outside at night and look at the stars and wonder what is out there. So we designed an app to tell us what is out there and when we can see it.
 Using just a user's location, we request space and weather data from various APIs to create and display events for the user.
 
 ### Demo
 * Sign Up
-![alt text](/readme-images/demo-sign-up.png)
+![alt text](/readme-images/demo-sign-up.png?raw=true)
 
 * Login
 
