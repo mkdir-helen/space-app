@@ -5,10 +5,10 @@ Using just a user's location, we request space and weather data from various API
 
 ### Demo
 * Sign Up
-![alt text](../../readme-images/demo-sign-up.png?raw=true)
-<!-- <p>
-    <img src=>
-</p> -->
+<!-- ![alt text](../../readme-images/demo-sign-up.png?raw=true) -->
+<p>
+    <img src='readme-images/demo-sign-up.png'>
+</p>
 
 * Login
 
