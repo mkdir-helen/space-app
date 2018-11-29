@@ -37,7 +37,11 @@ passport.deserializeUser((id, done)=>{
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+<<<<<<< HEAD
     callbackURL: "http://space-app.space/auth/google"
+=======
+    callbackURL: "http://www.space-app.com/auth/google"
+>>>>>>> 8c59d02abc663042d2a901ff091079b14e35320e
   },
   function(accessToken, refreshToken, profile, done) {
     User.getUsersGI(profile.id).then((currentUser) => {
