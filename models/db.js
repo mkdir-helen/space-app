@@ -32,7 +32,10 @@ const db = pgp({
     database: process.env.DB_NAME,
 });
 // ============================================
-
+console.log("Are my enviorments loading?")
+console.log(process.env.DB_HOST)
+console.log(process.env.DB_PORT)
+console.log(process.env.DB_NAME)
 // using an invalid connection string:
 const dbOne = pgpTwo('postgresql://ubuntu@' + process.env.DB_HOST + ':' + process.env.DB_PORT + '/' + process.env.DB_NAME);
 
