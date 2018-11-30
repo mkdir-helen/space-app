@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 const initOptions = {
     // global event notification;
     error(error, e) {
