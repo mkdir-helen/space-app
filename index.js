@@ -68,56 +68,56 @@ app.get('/', (req, res) => {
     // res.send(thePage);
 });
 
-app.get('/about', (req,res)=>{
+app.get('/about', (req, res) => {
     res.send(aboutPage());
 });
 
-app.get('/profile', ensureAuthenticated, (req,res)=>{
+app.get('/profile', ensureAuthenticated, (req, res) => {
     User.getById(req.session.passport.user)
-    .then(theUser => {
-        theUser.getFriends()
-        .then(friends =>{
-            theUser.getFavBody()
-            .then(bodies =>{
-                res.send(profilePage.profile( 
-                    profilePage.myFavsDiv(bodies),profilePage.myFriendsDiv(friends),profilePage.myLocation
-                    ([theUser.lat, theUser.long])))
-            })
+        .then(theUser => {
+            theUser.getFriends()
+                .then(friends => {
+                    theUser.getFavBody()
+                        .then(bodies => {
+                            res.send(profilePage.profile(
+                                profilePage.myFavsDiv(bodies), profilePage.myFriendsDiv(friends), profilePage.myLocation
+                                    ([theUser.lat, theUser.long])))
+                        })
+                })
         })
-    })
-    
+
     // profilePage.myFavsDiv
 });
 
 
 
-app.post('/favorite', ensureAuthenticated, (req, res)=>{
+app.post('/favorite', ensureAuthenticated, (req, res) => {
     const bodyname = req.body.bodyname
     User.getById(req.session.passport.user)
-    .then(theUser =>{
-        Body.getByName(bodyname)
-        .then(spaceBody =>{
-            theUser.addFavBody(spaceBody )
-            .then(()=>{
-                res.redirect('/profile')
-            })
+        .then(theUser => {
+            Body.getByName(bodyname)
+                .then(spaceBody => {
+                    theUser.addFavBody(spaceBody)
+                        .then(() => {
+                            res.redirect('/profile')
+                        })
+                })
         })
-    })
 })
 
 
-app.post('/friend', ensureAuthenticated, (req, res)=>{
+app.post('/friend', ensureAuthenticated, (req, res) => {
     const username = req.body.username
     User.getById(req.session.passport.user)
-    .then(theUser =>{
-        User.getByUsername(username)
-        .then(friend =>{
-            theUser.addFriend(friend )
-            .then(()=>{
-                res.redirect('/profile')
-            })
+        .then(theUser => {
+            User.getByUsername(username)
+                .then(friend => {
+                    theUser.addFriend(friend)
+                        .then(() => {
+                            res.redirect('/profile')
+                        })
+                })
         })
-    })
 })
 
 
@@ -137,17 +137,20 @@ app.post('/register', (req, res) => {
     //2. call user.add
     // give users atlanta's coordinates by default
     User.add(newUsername, 33, -84, newUsername, newPassword, '', '')
-    .then(newUser => {
-        updateEvents()
-        .then(() => {
-            req.session.passport = {
-                user: newUser.id
-            };
-            req.session.save(()=>{
-                res.redirect(`/profile`);
-            })
+        .then(newUser => {
+            updateEvents()
+                .then(() => {
+                    req.session.passport = {
+                        user: newUser.id
+                    };
+                    req.session.save(() => {
+                        res.redirect(`/profile`);
+                    })
+                })
+        }).catch(err => {
+            console.log("There is a huge error: " + err);
+
         })
-    })
 
 })
 
@@ -175,7 +178,7 @@ app.post('/login', (req, res) => {
                     user: theUser.id
                 };
                 console.log('it worked or it exists');
-                req.session.save(()=>{
+                req.session.save(() => {
                     res.redirect(`/profile`);
                 })
             } else {
@@ -193,53 +196,53 @@ app.get('/events', ensureAuthenticated, (req, res) => {
     // get all of user's events
     // and build page
     User.getById(req.session.passport.user)
-    .then(user => {
-        Event.getByUser(user.id)
-        .then(events => {
-            events.sort((event_a, event_b) => event_a.date.getTime() < event_b.date.getTime() ? 1 : -1)
-            const eventElements = []
-            const dayElements = []
-            const monthElements = []
-            const yearElements = []
-            let previousEvent = new Event(99999999, 'random', new Date('1000-12-12'), 1, null)
-            while (events.length > 0) {
-                const currentEvent = events.pop()
-                // if it's for the same day or the first event
-                if (eventElements.length == 0 || previousEvent.date.getDate() == currentEvent.date.getDate()) {
-                    eventElements.push(eventElement(currentEvent.name))
-                // if it is for a new day in same month
-                } else if (previousEvent.date.getMonth() == currentEvent.date.getMonth()) {
-                    dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
-                    // reset eventElements array
-                    eventElements.length = 0
-                    eventElements.push(eventElement(currentEvent.name))
-                    // if it is for a new month in same year
-                } else if (previousEvent.date.getFullYear() == currentEvent.date.getFullYear()) {
-                    dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
-                    monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
-                    // lock id dayElements and reset
-                    dayElements.length = 0
-                    eventElements.length = 0
-                    eventElements.push(eventElement(currentEvent.name))
-                    // if it is a new year
-                } else {
+        .then(user => {
+            Event.getByUser(user.id)
+                .then(events => {
+                    events.sort((event_a, event_b) => event_a.date.getTime() < event_b.date.getTime() ? 1 : -1)
+                    const eventElements = []
+                    const dayElements = []
+                    const monthElements = []
+                    const yearElements = []
+                    let previousEvent = new Event(99999999, 'random', new Date('1000-12-12'), 1, null)
+                    while (events.length > 0) {
+                        const currentEvent = events.pop()
+                        // if it's for the same day or the first event
+                        if (eventElements.length == 0 || previousEvent.date.getDate() == currentEvent.date.getDate()) {
+                            eventElements.push(eventElement(currentEvent.name))
+                            // if it is for a new day in same month
+                        } else if (previousEvent.date.getMonth() == currentEvent.date.getMonth()) {
+                            dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
+                            // reset eventElements array
+                            eventElements.length = 0
+                            eventElements.push(eventElement(currentEvent.name))
+                            // if it is for a new month in same year
+                        } else if (previousEvent.date.getFullYear() == currentEvent.date.getFullYear()) {
+                            dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
+                            monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
+                            // lock id dayElements and reset
+                            dayElements.length = 0
+                            eventElements.length = 0
+                            eventElements.push(eventElement(currentEvent.name))
+                            // if it is a new year
+                        } else {
+                            dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
+                            monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
+                            yearElements.push(yearElement(previousEvent.date.getFullYear(), monthElements.join('')))
+                            // reset month, day, and events
+                            monthElements.length = 0
+                            dayElements.length = 0
+                            eventElements.length = 0
+                            eventElements.push(eventElement(currentEvent.name))
+                        }
+                        previousEvent = currentEvent
+                    }
                     dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
                     monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
                     yearElements.push(yearElement(previousEvent.date.getFullYear(), monthElements.join('')))
-                    // reset month, day, and events
-                    monthElements.length = 0
-                    dayElements.length = 0
-                    eventElements.length = 0
-                    eventElements.push(eventElement(currentEvent.name))
-                }
-                previousEvent = currentEvent
-            }
-            dayElements.push(dayElement(previousEvent.date.getDate(), eventElements.join('')))
-            monthElements.push(monthElement(monthNameArray[previousEvent.date.getMonth()], dayElements.join('')))
-            yearElements.push(yearElement(previousEvent.date.getFullYear(), monthElements.join('')))
-            res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
+                    res.send(pageElement(bodyElement(contentElement(yearElements.join('')))))
+                })
         })
-    })
 })
 
 app.listen(3000, () => {
