@@ -22,7 +22,7 @@ create table bodies (
 );
 
 create table body_locations (
-    id serial primary key, 
+    id serial primary key,
     ra float,
     dec float,
     date date,
@@ -40,10 +40,10 @@ create table events (
   user_id integer references users (id)
 );
 
--- create table users_events (
---     user_id integer references users (id),
---     event_id integer references events (id)
--- );
+create table users_events (
+    user_id integer references users (id),
+    event_id integer references events (id)
+);
 
 create table friends (
     user_id_a integer references users (id),
