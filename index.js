@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-//require('dotenv').config();
-=======
+
 // require('dotenv').config();
->>>>>>> 8c59d02abc663042d2a901ff091079b14e35320e
 const express = require('express');
 // const app = express();
 const bodyParser = require('body-parser');
