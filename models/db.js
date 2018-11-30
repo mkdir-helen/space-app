@@ -34,7 +34,7 @@ const db = pgp({
 // ============================================
 
 // using an invalid connection string:
-const dbOne = pgpTwo('postgresql://ubuntu@' + host + ':' + port + '/' + database);
+const dbOne = pgpTwo('postgresql://ubuntu@' + process.env.DB_HOST + ':' + process.env.DB_PORT + '/' + process.env.DB_NAME);
 
 dbOne.connect()
     .then(obj => {
