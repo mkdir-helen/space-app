@@ -25,7 +25,7 @@ app.use(session({
 passport.serializeUser((user,done)=> {
     console.log(user);
     console.log('this is serializeUser');
-    done(null, user); 
+    done(null, user.google_ID); 
 })
 
 passport.deserializeUser((id, done)=>{
