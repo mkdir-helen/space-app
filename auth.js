@@ -29,7 +29,11 @@ passport.serializeUser((user,done)=> {
 })
 
 passport.deserializeUser((id, done)=>{
+    console.log(id);
+    console.log('deserialize id');
     User.getById(id).then((user)=> {
+        console.log(user);
+        console.log('user from deserialize');
         done(null, user);
     })
 })  
@@ -40,10 +44,12 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://space-app.space/auth/google"
   },
   function(accessToken, refreshToken, profile, done) {
+      
     User.getUsersGI(profile.id).then((currentUser) => {
         if(currentUser){
             //already have the user
             done(null, currentUser);
+            console.log(currentUser);
             console.log('Currently logged in?');
         }else {
             //if not, create user in our db
