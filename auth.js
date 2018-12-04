@@ -31,7 +31,7 @@ passport.serializeUser((user,done)=> {
 passport.deserializeUser((id, done)=>{
     console.log(id);
     console.log('deserialize id');
-    User.getById(id).then((user)=> {
+    User.getUsersGI(id).then((user)=> {
         console.log(user);
         console.log('user from deserialize');
         done(null, user);
