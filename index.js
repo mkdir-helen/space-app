@@ -73,6 +73,7 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
+    console.log(req.session)
     User.getById(req.session.passport.user)
         .then(theUser => {
             theUser.getFriends()
