@@ -76,7 +76,8 @@ app.get('/profile', ensureAuthenticated, (req, res) => {
     console.log(req.session)
     let isRegular = typeof req.session.passport.user !== 'string';
     let get = isRegular ? User.getById : User.getUsersGI;
-
+    console.log(isRegular);
+    console.log('isRegular');
     get(req.session.passport.user)
         .then(theUser => {
             theUser.getFriends()
