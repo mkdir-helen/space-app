@@ -74,7 +74,7 @@ app.get('/about', (req, res) => {
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     console.log(req.session)
-    let isRegular = typeof req.session.passport.user === 'string';
+    let isRegular = typeof req.session.passport.user !== 'string';
     let get = isRegular ? User.getById : User.getUsersGI;
 
     get(req.session.passport.user)
