@@ -74,11 +74,12 @@ app.get('/about', (req, res) => {
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     console.log(req.session)
-    let isRegular = typeof req.session.passport.user !== 'string';
+    let isRegular = req.session.spaceapp !== undefined;
     let get = isRegular ? User.getById : User.getUsersGI;
+    let id = isRegular ? req.session.spaceapp.user : req.session.passport.user;
     console.log(isRegular);
     console.log('isRegular');
-    get(req.session.passport.user)
+    get(id)
         .then(theUser => {
             theUser.getFriends()
                 .then(friends => {
@@ -181,7 +182,7 @@ app.post('/login', (req, res) => {
             console.log('this is supposedly theUser');
             // const didMatch = bcrypt.compareSync(loginPassword, theUser.pwhash);
             if (theUser.passwordDoesMatch(loginPassword)) {
-                req.session.passport = {
+                req.session.spaceapp = {
                     user: theUser.id
                 };
                 console.log('it worked or it exists');
