@@ -146,7 +146,7 @@ app.post('/register', (req, res) => {
         .then(newUser => {
             updateEvents()
                 .then(() => {
-                    req.session.passport = {
+                    req.session.spaceapp = {
                         user: newUser.id
                     };
                     req.session.save(() => {
