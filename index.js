@@ -206,8 +206,10 @@ app.post('/login', (req, res) => {
 app.get('/events', ensureAuthenticated, (req, res) => {
     // user's main page
     // get all of user's events
-    // and build page
-    User.getById(req.session.passport.user)
+    let isRegular = req.session.spaceapp !== undefined;
+    let get = isRegular ? User.getById : User.getUsersGI;
+    let id = isRegular ? req.session.spaceapp.user : req.session.passport.user;
+    get(id)
         .then(user => {
             Event.getByUser(user.id)
                 .then(events => {
