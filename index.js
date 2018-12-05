@@ -77,8 +77,6 @@ app.get('/profile', ensureAuthenticated, (req, res) => {
     let isRegular = req.session.spaceapp !== undefined;
     let get = isRegular ? User.getById : User.getUsersGI;
     let id = isRegular ? req.session.spaceapp.user : req.session.passport.user;
-    console.log(isRegular);
-    console.log('isRegular');
     get(id)
         .then(theUser => {
             theUser.getFriends()
@@ -99,7 +97,10 @@ app.get('/profile', ensureAuthenticated, (req, res) => {
 
 app.post('/favorite', ensureAuthenticated, (req, res) => {
     const bodyname = req.body.bodyname
-    User.getById(req.session.passport.user)
+    let isRegular = req.session.spaceapp !== undefined;
+    let get = isRegular ? User.getById : User.getUsersGI;
+    let id = isRegular ? req.session.spaceapp.user : req.session.passport.user;
+    get(id)
         .then(theUser => {
             Body.getByName(bodyname)
                 .then(spaceBody => {
@@ -114,7 +115,10 @@ app.post('/favorite', ensureAuthenticated, (req, res) => {
 
 app.post('/friend', ensureAuthenticated, (req, res) => {
     const username = req.body.username
-    User.getById(req.session.passport.user)
+    let isRegular = req.session.spaceapp !== undefined;
+    let get = isRegular ? User.getById : User.getUsersGI;
+    let id = isRegular ? req.session.spaceapp.user : req.session.passport.user;
+    get(id)
         .then(theUser => {
             User.getByUsername(username)
                 .then(friend => {
