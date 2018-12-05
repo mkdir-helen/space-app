@@ -40,7 +40,7 @@ const pageElement = require('./views/page')
 //making sure users are logged in to do anything
 const ensureAuthenticated = (req, res, next) => {
     console.log(req.session);
-    if (req.session.passport || req.isAuthenticated()) {
+    if (req.session.passport || req.session.spaceapp) {
         // req.user is available for use here
         console.log('we are all good');
         return next();
