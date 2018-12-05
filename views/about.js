@@ -27,7 +27,7 @@ function about() {
                <a href="/profile">My Space <i class="fas fa-globe"></i></a>
            </li>
            <li>
-               <a href="#">Login <i class="fas fa-sign-in-alt"></i></a>
+               <a href="/logout">Logout <i class="fas fa-sign-in-alt"></i></a>
            </li>
         
        </ul>
