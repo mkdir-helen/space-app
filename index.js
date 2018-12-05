@@ -148,6 +148,8 @@ app.post('/register', (req, res) => {
                         user: newUser.id
                     };
                     req.session.save(() => {
+                        console.log(req.session);
+                        console.log('this is req session ');
                         res.redirect(`/profile`);
                     })
                 })
